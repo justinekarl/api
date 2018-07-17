@@ -2,19 +2,19 @@
     <table colspan=5 rowspan=5 border=3>
         <tr>
             <td>
-                Student Name
+                <strong>Student Name</strong>
             </td>
             <td>
-                Company
+                <strong>Company</strong>
             </td>
             <td>
-                Time In
+                <strong>Login Date/Time In</strong>
             </td>
             <td>
-                Time Out
+                <strong>Logout Date/Time Out</strong>
             </td>
             <td>
-                Scanned at
+                <strong>Logged in through</strong>
             </td>
         </tr>
 
@@ -27,13 +27,13 @@
                 {{$log->company_name}}
             </td>
             <td>
-                {{date('Y-m-d h:i:s a',strtotime($log->login_date))}}
+                {{null != $log->login_date ?  date('Y-m-d h:i:s a',strtotime($log->login_date)) : "" }}
             </td>
             <td>
-                {{date('Y-m-d h:i:s a',strtotime($log->logout_date))}}
+                {{null != $log->logout_date ? date('Y-m-d h:i:s a',strtotime($log->logout_date)) : ""}}
             </td>
             <td>
-                {{$log->finger_print_scanner ? 'Office' : 'field'}}
+                {{$log->finger_print_scanner ? 'Finger Print' : 'QR Code'}}
             </td>
         </tr>
         @endforeach

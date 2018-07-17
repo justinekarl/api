@@ -7,7 +7,9 @@ error_log("get section available list");
 if (isset($_POST['agentid'])) {
     $agent_id = $_POST['agentid'];
 
-    $sectionQuery = "SELECT DISTINCT id,COALESCE(section_name,'') as section_name FROM section order by section_name";
+    $sectionQuery = "
+               
+                SELECT DISTINCT id,COALESCE(section_name,'') as section_name FROM section order by section_name";
 
 
     $items = [];

@@ -8,7 +8,7 @@ if (isset($_POST['companyId'])) {
     $companyId = $_POST['companyId'];
     $studentId = $_POST['studentId'];
     
-    $queryOjt = " select count(*) > 0 cnt FROM company_ojt  WHERE user_id = (SELECT id FROM resume_details WHERE user_id = '$studentId') AND company_id = '$companyId'
+    $queryOjt = " select count(*) > 0 cnt FROM company_ojt  WHERE accepted AND user_id = (SELECT id FROM resume_details WHERE user_id = '$studentId') AND company_id = '$companyId'
 		    ";
 
             error_log($queryOjt);

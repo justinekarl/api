@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 
 Route::post('ojtmonitoring/report', 'ReportController@generateReport');
+Route::post('ojtmonitoring/reportweekly', 'ReportController@printWeeklyReport');

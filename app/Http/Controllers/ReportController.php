@@ -26,7 +26,7 @@ class ReportController extends Controller
 
 
 
-
+	AND (CAST(`login_date` As time) >= '".$_POST['startTime']."' AND CAST(`logout_date` as time) <= '".$_POST['endTime']."' ) 
 	AND (cast(login_date as date) >= '2018/08/07' AND cast(logout_date as date) <= '2018/09/01') and b.name = 'test'   AND c.id = 3 ORDER BY 3 desc ,4 desc 
 
 
@@ -38,9 +38,15 @@ class ReportController extends Controller
 	public function generateReport()
 	{
 		$student_name = request('student_name');
-		/*$company_name = request('company_name');
 		$from = request('from');
-		$thru = request('thru');*/
+		$thru = request('thru');
+
+		$startTime = request('startTime');
+		$endTime = request('endTime');
+
+		/*$company_name = request('company_name');
+		
+		*/
 		$sql = "SELECT "; 
 		$sql .= "b.name, ";
 		$sql .= "c.name as company_name, ";
@@ -54,8 +60,29 @@ class ReportController extends Controller
 		$sql .= "WHERE b.id IN (SELECT user_id FROM resume_details WHERE approved ) ";
 
 		if(null != $student_name && strlen($student_name) > 0){
-			$sql .= " AND b.name = '".$student_name."'";
+			$sql .= " AND b.name like '%".$student_name."%'";
 		}
+
+		if(null != $from && strlen($from) > 0){
+			$sql .= " AND cast(login_date as date) >=  '".$from."' ";
+		}
+
+		if(null != $thru && strlen($thru) > 0){
+			$sql .= " AND cast(logout_date as date) <=  '".$thru."' ";
+		}
+
+		if(null != $startTime && strlen($startTime) > 0){
+			$sql .= " AND CAST(`login_date` As time) >=  '".$startTime."' ";
+		}
+
+		if(null != $endTime && strlen($endTime) > 0){
+			$sql .= " AND CAST(`logout_date` as time) <=  '".$endTime."' ";
+		}
+
+		$sql .= " ORDER BY 3 desc ,4 desc ";
+
+
+
 //		return $student_name;
 		error_log($sql);
 		$logs = DB::select(DB::raw($sql));
@@ -68,6 +95,38 @@ class ReportController extends Controller
 		
 		$report = view(
 				'report', ['logs' => $logs]
+			)->render();
+		error_log($report);
+		return json_encode(['data' => $report]);
+	}
+
+	public function printWeeklyReport(){
+
+		/*
+
+		SELECT date_format(sec_to_time(SUM(TIMEDIFF(timestamp(logout_date),timestamp(login_date)))) , '%H:%i') as accumulated_time,student_id  FROM student_ojt_attendance_log log LEFT JOIN user student ON student.id = log.student_id GROUP BY log.student_id;
+		*/
+
+		$sql = "SELECT "; 
+		$sql .= "date_format(sec_to_time(SUM(TIMEDIFF(timestamp(logout_date),timestamp(login_date)))) , '%H:%i') as accumulated_time, ";
+		$sql .= "student.name as student_name, ";
+		$sql .= "company.name as company_name, ";
+		$sql .= "student_id ";
+	
+		$sql .= "FROM student_ojt_attendance_log log ";
+		$sql .= "LEFT JOIN user student ON student.id = log.student_id AND student.accounttype = 1 ";
+		$sql .= "LEFT JOIN user company ON company.id = log.company_id AND company.accounttype = 3 ";
+		$sql .= "WHERE student.id IN (SELECT user_id FROM resume_details WHERE approved ) ";
+
+		$sql .= " GROUP BY log.student_id,log.company_id ";
+
+
+		error_log($sql);
+
+		$logs = DB::select(DB::raw($sql));
+
+		$report = view(
+				'weekly', ['logs' => $logs]
 			)->render();
 		error_log($report);
 		return json_encode(['data' => $report]);

@@ -13,20 +13,13 @@ if (isset($_POST['agentid'])) {
 
     error_log($sectionQuery);
 
-	$conn = new mysqli($host, $username, $password, $db_name,$port);
+	$result_checker = mysqli_query($link,$sectionQuery);
+    $checker = (int) mysqli_fetch_assoc($result_checker)["section_id"];
+
+    error_log($checker);
 
 
-	$checker= 0;
-    if ($result = $conn->query($sectionQuery)) {
-        while ($row = $result->fetch_assoc()) {
-            $checker = $checker+1;
-            
-                foreach($row  as $key => $value){
-                    $response[$key] = $value;
-                }
-         }
-        $result->free();
-    }
+     $response["section_id"] = $checker;
 
     $queryOjt = " SELECT CONCAT('date_created~',COALESCE(CAST(log_date_created as date),'')),CONCAT('message~',COALESCE(message,'')) FROM student_notif WHERE user_id = (SELECT id FROM resume_details WHERE user_id = '$agent_id') ORDER BY log_date_created DESC ";
 
@@ -44,15 +37,14 @@ if (isset($_POST['agentid'])) {
 
          error_log("xxx------>".json_encode($items)."<------");
 	    if(sizeof($items) > 0){
-	        $response["success"] = 1;
+	        
 	        $response["message_notif"] = $items;
-	        error_log(json_encode($response));
-	        echo json_encode($response);
-	    }else {
-	        $response["success"] = 0;
-	        $response["message_notif"] = "";
-	        echo json_encode($response);
+	      
 	    }
+        
+            $response["success"] = 1;
+            error_log(json_encode($response));
+            echo json_encode($response);
 
 }
 
