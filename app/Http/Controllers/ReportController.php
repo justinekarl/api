@@ -92,11 +92,12 @@ class ReportController extends Controller
 		//$logs = GenericResources::collection($logs);
 		//return $logs;
 
+        $report = $this->prepareReport($logs);
 		
-		$report = view(
+	/*	$report = view(
 				'report', ['logs' => $logs]
 			)->render();
-		error_log($report);
+		error_log($report);*/
 		return json_encode(['data' => $report]);
 	}
 
@@ -124,12 +125,109 @@ class ReportController extends Controller
 		error_log($sql);
 
 		$logs = DB::select(DB::raw($sql));
-
-		$report = view(
+        error_log(print_r($logs, true));
+		/*$report = view(
 				'weekly', ['logs' => $logs]
 			)->render();
-		error_log($report);
+		error_log($report);*/
+        $report = $this->prepareWeeklyReport($logs);
 		return json_encode(['data' => $report]);
 	}
+
+	public function prepareReport($logs)
+    {
+
+        $file = "<html>";
+        $file .= "<table colspan=5 rowspan=5 border=3>";
+        $file .= "<tr>";
+        $file .= "<td>";
+        $file .= "  <strong>Student Name</strong>";
+        $file .= "  </td>";
+        $file .= "      <td>";
+        $file .= "        <strong>Company</strong>";
+        $file .= "        </td>";
+        $file .= "      <td>";
+        $file .= "          <strong>Login Date/Time In</strong>";
+        $file .= "       </td>";
+        $file .= "       <td>";
+        $file .= "            <strong>Logout Date/Time Out</strong>";
+        $file .= "        </td>";
+        $file .= "        <td>";
+        $file .= "            <strong>Logged in through</strong>";
+        $file .= "        </td>";
+        $file .= "     </tr>";
+
+        foreach ($logs as $log){
+            $file .= "  <tr>";
+            $file .= "  <td>";
+            $file .= "$log->name";
+            $file .= "    </td>";
+            $file .= "      <td>";
+            $file .= "$log->company_name";
+            $file .= "   </td>";
+            $file .= "    <td>";
+            $file .= null != $log->login_date ?  date('Y-m-d h:i:s a',strtotime($log->login_date)) : "";
+            $file .= "    </td>";
+            $file .= "    <td>";
+            $file .= null != $log->logout_date ? date('Y-m-d h:i:s a',strtotime($log->logout_date)) : "";
+            $file .= "   </td>";
+            $file .= "    <td>";
+            $file .= $log->finger_print_scanner ? 'Finger Print' : 'QR Code';
+            $file .= "   </td>";
+            $file .= "   </tr>";
+            }
+        $file .= "  </table>";
+
+        $file .= " </html>";
+        return $file;
+    }
+
+    public function prepareWeeklyReport($logs)
+    {
+
+        $file = "<html>";
+        $file .= "<table colspan=5 rowspan=5 border=3>";
+        $file .= "<tr>";
+        $file .= "<td>";
+        $file .= "  <strong>Student Name</strong>";
+        $file .= "  </td>";
+        $file .= "      <td>";
+        $file .= "        <strong>Company</strong>";
+        $file .= "        </td>";
+        $file .= "      <td>";
+        $file .= "          <strong>Login Date/Time In</strong>";
+        $file .= "       </td>";
+        $file .= "       <td>";
+        $file .= "            <strong>Logout Date/Time Out</strong>";
+        $file .= "        </td>";
+        $file .= "        <td>";
+        $file .= "            <strong>Logged in through</strong>";
+        $file .= "        </td>";
+        $file .= "     </tr>";
+
+        foreach ($logs as $log){
+            $file .= "  <tr>";
+            $file .= "  <td>";
+            $file .= "$log->name";
+            $file .= "    </td>";
+            $file .= "      <td>";
+            $file .= "$log->company_name";
+            $file .= "   </td>";
+            $file .= "    <td>";
+            $file .= null != $log->login_date ?  date('Y-m-d h:i:s a',strtotime($log->login_date)) : "";
+            $file .= "    </td>";
+            $file .= "    <td>";
+            $file .= null != $log->logout_date ? date('Y-m-d h:i:s a',strtotime($log->logout_date)) : "";
+            $file .= "   </td>";
+            $file .= "    <td>";
+            $file .= $log->finger_print_scanner ? 'Finger Print' : 'QR Code';
+            $file .= "   </td>";
+            $file .= "   </tr>";
+        }
+        $file .= "  </table>";
+
+        $file .= " </html>";
+        return $file;
+    }
 
 }
