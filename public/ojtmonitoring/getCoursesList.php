@@ -3,10 +3,20 @@
 require_once 'db_config.php';
 $response = array();
 
+$selectedCollege = $_POST['selectedCollege'];
 
 error_log("get courses list");
 
-    $coursesSQL = " select * from course_look_up order by name";
+error_log("get courses list for college".$selectedCollege);
+
+    $coursesSQL = " select * from course_look_up WHERE 1= 1 ";
+
+	if($selectedCollege != "--Select Below--"){
+		$coursesSQL = $coursesSQL . " AND college = ".$selectedCollege;
+	}
+
+
+    $coursesSQL = $coursesSQL . " order by name ";
 
 	 $courses = [];
      error_log($coursesSQL);

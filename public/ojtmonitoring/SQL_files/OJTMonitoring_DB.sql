@@ -194,3 +194,63 @@ SELECT 'Public Ad'
 
 ALTER TABLE user ADD COLUMN course text;
 ALTER TABLE user ADD COLUMN ojt_done boolean default false;
+
+
+ALTER TABLE course_look_up ADD COLUMN college text;
+
+
+DELETE FROM course_look_up;
+
+INSERT INTO course_look_up(college,name)
+SELECT 'College of Computing and information Sciences','Master in information technology(MIT)'
+UNION
+SELECT 'College of Computing and information Sciences','Bachelor of Science in Computer Science(BSCS)'
+UNION
+SELECT 'College of Computing and information Sciences','Bachelor of Science In Information Technology(BSIT)'
+
+
+UNION
+SELECT 'College of Arts And Social Sciences','Bachelor of Arts In Communication'
+UNION
+SELECT 'College of Arts And Social Sciences','Bachelor of Artis in Political Science'
+UNION
+SELECT 'College of Arts And Social Sciences','Bachelor of Science in Social Work'
+
+UNION
+SELECT 'College of Hospitality Management','BS in Hotel and Restaurant Management'
+UNION
+SELECT 'College of Hospitality Management','Bs in tourism'
+
+
+UNION
+SELECT 'College of Criminology','Bs in Criminology'
+
+UNION
+
+SELECT 'College Of Education','Bachelor of Elementary Education'
+UNION
+SELECT 'College Of Education','Bachelor of Secondary Education'
+
+UNION
+
+SELECT 'College of Nursing','Bs of Science in Nursing'
+
+UNION
+SELECT 'College Of Engineering','Bs in Computer Engineering'
+UNION
+SELECT 'College Of Engineering','Bs in Electronics Engineering'
+
+
+UNION
+SELECT 'College of Business','Bachelor of Science in Accountancy (BSA)'
+UNION
+SELECT 'College of Business','Bachelor of Science in Accounting Technology (BSAT)'
+UNION
+SELECT 'College of Business','Bachelor of Science in Business Administration (BSBA)'
+UNION
+SELECT 'College of Business','Bachelor of Science in Customs Administration (BSCA)'
+UNION
+SELECT 'College of Business','Bachelor of Science in Real Estate Management (BSREM)'
+
+
+;

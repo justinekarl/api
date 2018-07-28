@@ -12,7 +12,7 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
     $user_name = $_POST['user_name'];
     $password = $_POST['password'];
    // if($accounttype == 1){
-        $query = "SELECT * FROM user where username='".$user_name."' and password ='".$password."' AND approved ";
+        $query = "SELECT * FROM user where username='".$user_name."' and password ='".$password."' ";
 
 
 
@@ -28,20 +28,46 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
     $result_checker = mysqli_query($link,$query);
 
     $checker  = 0;
+    $accounttype_val = 0;
+    $approved_val = false;
     while($continents =mysqli_fetch_assoc($result_checker)){
         $checker  = 1;
         foreach($continents  as $key => $value){
+        	error_log($key ."-->". $value);
+        	if($key == 'approved'){
+        		$approved_val = $value;
+        	}
+
+        	if($key == 'accounttype'){
+        		$accounttype_val = $value;
+        	}
             $response[$key] = $value;
         }
     }
 
 
     if($checker > 0){
-        $response["success"] = 1;
+
+ 		if($approved_val == false){
+        	if($accounttype_val == 1){
+        		error_log("Student account not yet approved");
+        		 $response["success"] = 0;
+    			 $response["message"] = "Must be approved by teacher.";
+        	}else if($accounttype_val == 4){
+        		error_log("Coordinator account not yet approved");
+        		$response["success"] = 0;
+    			$response["message"] = "Must be approved by company.";
+        	}
+        }else{
+
+     	   $response["success"] = 1;
+    	}
+
         error_log(json_encode($response));
         echo json_encode($response);
     }else{
         $response["success"] = 0;
+       
         $response["message"] = "User does not exists";
         error_log(json_encode($response));
         echo json_encode($response);
