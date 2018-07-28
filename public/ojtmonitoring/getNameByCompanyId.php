@@ -8,13 +8,13 @@ error_log("get name by company id");
 if (isset($_POST['agentid'])) {
     $agent_id = $_POST['agentid'];
     
-    $queryOjt = " SELECT CONCAT('company_id~',company.id),CONCAT('company_name~',COALESCE(company.name,'')),CONCAT('rating~',company.rating),CONCAT('student_rating~',COALESCE(scr.rating,1)),COALESCE(scr.remarks,'')
+    $queryOjt = " SELECT CONCAT('company_id~',company.id),CONCAT('company_name~',COALESCE(company.name,'')),CONCAT('rating~',company.rating),CONCAT('student_rating~',COALESCE(scr.rating,1)),CONCAT('remarks~',COALESCE(scr.remarks,''))
 					FROM company_ojt co
 					LEFT JOIN resume_details rd ON rd.id =  co.user_id
 					LEFT JOIN user company ON company.id = co.company_id
 					LEFT JOIN user student ON student.id = rd.user_id
 					LEFT JOIN student_company_rating scr ON scr.company_id = company.id AND scr.student_id =  student.id
-				  WHERE student.id = ".$agent_id."
+				  WHERE student.id = ".$agent_id." AND co.accepted
 		    ";
 
 	 $companies = [];

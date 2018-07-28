@@ -34,9 +34,34 @@ if (isset($_POST['agentid'])) {
 
 
     $response["percentage"] = $checker;
+
+
+
+
+    $updateSQL = "UPDATE user SET ojt_done = ".($checker >= 100)."  WHERE id = ".$_POST['agentid']." ";
+
+    error_log($updateSQL);
+
+    $result11=mysqli_query($link,
+                $updateSQL);
+
+
+	 error_log("update company Rating ".print_r($result11,true));
+
+
+
             
        
+    if($checker > 100){
 
+    	$endDateSQL= "SELECT CONCAT('',min(cast(logout_date as date)))  as logout_date FROM student_ojt_attendance_log    where login_date is not null And student_id = ".$_POST['agentid']." AND   logout_date IS NOT NULL order by id DESC LIMIT 1 ";
+
+
+    	$result_checker = mysqli_query($link,$endDateSQL);
+		$checker1 =mysqli_fetch_assoc($result_checker)["logout_date"];
+
+    	$response["end_date"] =  $checker1;
+    }
 
 
 
