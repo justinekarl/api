@@ -17,13 +17,13 @@ if (isset($_POST['agentid'])) {
 
 	if($checker == 0){
 	
-		$insertRatingSql = "INSERT INTO student_company_rating(company_id,student_id,rating) SELECT ".$_POST['companyId'].",".$_POST['agentid'].",".$_POST['rating']."";
+		$insertRatingSql = "INSERT INTO student_company_rating(company_id,student_id,rating,remarks) SELECT ".$_POST['companyId'].",".$_POST['agentid'].",".$_POST['rating'].",'".$_POST['remarks']."' ";
 		error_log($insertRatingSql);
 
 		 $result=mysqli_query($link,
 	                $insertRatingSql);
 	}else{
-		$updateRatingSql = "UPDATE student_company_rating SET rating = ".$_POST['rating']." WHERE student_id = ".$_POST['agentid']." AND company_id = ".$_POST['companyId']." ";
+		$updateRatingSql = "UPDATE student_company_rating SET rating = ".$_POST['rating'].", remarks = '".$_POST['remarks']."' WHERE student_id = ".$_POST['agentid']." AND company_id = ".$_POST['companyId']." ";
 		error_log($updateRatingSql);
 		$result=mysqli_query($link,
 	                $updateRatingSql);

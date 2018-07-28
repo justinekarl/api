@@ -44,6 +44,14 @@ class ReportController extends Controller
 		$startTime = request('startTime');
 		$endTime = request('endTime');
 
+		$isCompany = request('isCompany');
+		$coordinator = request('coordinator');
+		$college = request('college');
+		$companyId = request('companyId');
+		$agentId = request('agentId');
+
+
+
 		/*$company_name = request('company_name');
 		
 		*/
@@ -78,6 +86,26 @@ class ReportController extends Controller
 		if(null != $endTime && strlen($endTime) > 0){
 			$sql .= " AND CAST(`logout_date` as time) <=  '".$endTime."' ";
 		}
+
+
+
+		if(null != $isCompany && strlen($isCompany) > 0){
+			$sql .= " AND c.id = ".$agentId;
+		}
+		if(null != $coordinator && strlen($coordinator) > 0 && null != $companyId && strlen($companyId) > 0){
+	
+			$sql .= " AND a.company_id = ".$companyId);
+		}
+
+		if(null != $college && strlen($college) > 0){
+			if(strlen($college) > 0){
+				$sql .= " AND b.college like '".$college."' ";	
+			}
+
+			
+		}
+
+
 
 		$sql .= " ORDER BY 3 desc ,4 desc ";
 

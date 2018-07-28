@@ -254,3 +254,14 @@ SELECT 'College of Business','Bachelor of Science in Real Estate Management (BSR
 
 
 ;
+
+
+ALTER TABLE student_company_rating ADD COLUMN remarks TEXT;
+
+CREATE TABLE company_student_rating(id int not null auto_increment,
+                                    company_id int,
+                                    student_id int,
+                                    log_date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                    rating int,
+                                    remarks TEXT,
+                                    primary key(id));

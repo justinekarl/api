@@ -6,10 +6,17 @@ $response = array();
 error_log("get section available list");
 if (isset($_POST['agentid'])) {
     $agent_id = $_POST['agentid'];
+    $college = $_POST['college'];
 
     $sectionQuery = "
                
-                SELECT DISTINCT id,COALESCE(section_name,'') as section_name FROM section order by section_name";
+                SELECT DISTINCT id,COALESCE(section_name,'') as section_name FROM section WHERE 1=1 ";
+
+    if($college != ''){
+        $sectionQuery = $sectionQuery. " AND created_by_teacher_id IN (SELECT id FROM user WHERE accounttype = 2 AND college = '".$college."') ";
+    }
+
+    $sectionQuery = $sectionQuery. " order by section_name";              
 
 
     $items = [];

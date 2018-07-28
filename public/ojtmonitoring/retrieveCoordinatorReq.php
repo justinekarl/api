@@ -27,16 +27,19 @@ if (isset($_POST['companyId'])) {
 
          error_log("6------>".json_encode($items)."<------");
 	    if(sizeof($items) > 0){
-	        $response["success"] = 1;
+	       
 	        $response["coordinator_details"] = $items;
 	        error_log(json_encode($response));
-	        echo json_encode($response);
+	        
 	    }else {
-	        $response["success"] = 0;
+	        
 	        $response["coordinator_details"] = "None";
-	        echo json_encode($response);
+	        error_log(json_encode($response));
 	    }
 
+	     $response["success"] = 1;
+
+echo json_encode($response);
 }
 
 

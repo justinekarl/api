@@ -25,6 +25,19 @@ foreach ($selectedStudentsToAccept as $key => $value) {
 		$approved_val =intval($value."");
 
 
+	/*$existsQry = "SELECT COUNT(*) cnt FROM company_ojt WHERE user_id = ".$studId." AND accepted AND  company_id != ".$agentId;
+
+	error_log("ALREADY APPROVED  -->".$existsQry);
+
+	$result_checker = mysqli_query($link,$existsQry);
+    $checker = (int) mysqli_fetch_assoc($result_checker)["cnt"];
+
+    if($checker > 0){
+    	$response['already_accepted_from_other_company'] = $studId;
+    	error_log("AM HERE  -->".$studId);
+    	continue;
+    }
+*/
 
 	$updateSelectedStudentQry = "UPDATE company_ojt SET accepted_date = current_date , accepted = ".$approved_val." , accepted_by_company_id = '$agentId' WHERE user_id = ".$studId." AND  company_id = ".$agentId." ";
 
@@ -36,7 +49,7 @@ foreach ($selectedStudentsToAccept as $key => $value) {
 	error_log("update selected accepted info ".print_r($result,true));	
 
 	if($result == 1 && $approved_val == true){
-		$insertNotifQry = "INSERT INTO student_notif(user_id,message) VALUES ('$studId','Congratulations! You were accepted as an OJT for Company : ".$companyName." ' )";
+		$insertNotifQry = "INSERT INTO student_notif(user_id,message) VALUES ('$studId','You were accepted as an OJT for Company : ".$companyName." ' )";
 
 		error_log($insertNotifQry);
 

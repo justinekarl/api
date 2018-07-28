@@ -16,6 +16,7 @@ if (isset($_POST['agentid'])) {
 					WHERE a.company_id= ".$agent_id."
 					AND accounttype = 1
 					AND rd.approved
+					AND a.user_id NOT IN (select user_id from company_ojt where company_id != ".$agent_id." and accepted)
 					ORDER BY 1,2,3,4
 		    ";
 

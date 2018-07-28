@@ -25,8 +25,7 @@ foreach ($jsonObjs as $key => $value) {
 
 			$result1=mysqli_query($link, $updateApproveQry);
 
-			error_log("insert selected ojt info ".print_r($result1,true));	
-
+			
 
 			$existsQry = "SELECT COUNT(*) cnt FROM company_ojt WHERE user_id = ".$key." AND  company_id = ".$key1;
 
@@ -34,6 +33,8 @@ foreach ($jsonObjs as $key => $value) {
     		$checker = (int) mysqli_fetch_assoc($result_checker)["cnt"];
 
     		if($checker == 0){
+    			error_log("insert selected ojt info ".print_r($result1,true));	
+
 
 				$insertOJTQry = "INSERT INTO company_ojt(user_id,company_id,approved_by_teacher_id)
 								SELECT ".$key.",".$key1.",".$_POST['agentId']."
@@ -43,8 +44,20 @@ foreach ($jsonObjs as $key => $value) {
 				$result2=mysqli_query($link, $insertOJTQry);
 
 				error_log("insert company ojt info ".print_r($result2,true));	
+			}else{
+
+				if($approved_val == 0){
+
+					error_log("delete selected ojt info ".print_r($result1,true));	
+
+					$deleteQry = "DELETE FROM company_ojt WHERE user_id = ".$key." AND company_id = ".$key1." ";
+					error_log($deleteQry);
+
+					$result2=mysqli_query($link, $deleteQry);
+				}
+
 			}
-			break;	
+			//break;	
 		}
 	}
 	

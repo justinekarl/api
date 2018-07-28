@@ -11,8 +11,8 @@ error_log("get courses list for college".$selectedCollege);
 
     $coursesSQL = " select * from course_look_up WHERE 1= 1 ";
 
-	if($selectedCollege != "--Select Below--"){
-		$coursesSQL = $coursesSQL . " AND college = ".$selectedCollege;
+	if($selectedCollege != "--Select Below--" && $selectedCollege != ''){
+		$coursesSQL = $coursesSQL . " AND college = '".$selectedCollege."' ";
 	}
 
 
