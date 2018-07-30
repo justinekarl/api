@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    
+
 
 	/*
 	SELECT CONCAT('student_name~',COALESCE(b.name,'')) as student_name,
 		CONCAT('company_name~',COALESCE(c.name,'')) as company_name,
 		CONCAT('login_date~',COALESCE(a.login_date,'')),
-		CONCAT('logout_date~',COALESCE(a.logout_date,'')), 
+		CONCAT('logout_date~',COALESCE(a.logout_date,'')),
 		CONCAT('from_finger_print~',CASE WHEN finger_print_scanner THEN 'Y' ELSE 'N' END),
 		cast(login_date as date)
 	FROM student_ojt_attendance_log a
@@ -26,8 +26,8 @@ class ReportController extends Controller
 
 
 
-	AND (CAST(`login_date` As time) >= '".$_POST['startTime']."' AND CAST(`logout_date` as time) <= '".$_POST['endTime']."' ) 
-	AND (cast(login_date as date) >= '2018/08/07' AND cast(logout_date as date) <= '2018/09/01') and b.name = 'test'   AND c.id = 3 ORDER BY 3 desc ,4 desc 
+	AND (CAST(`login_date` As time) >= '".$_POST['startTime']."' AND CAST(`logout_date` as time) <= '".$_POST['endTime']."' )
+	AND (cast(login_date as date) >= '2018/08/07' AND cast(logout_date as date) <= '2018/09/01') and b.name = 'test'   AND c.id = 3 ORDER BY 3 desc ,4 desc
 
 
 
@@ -53,9 +53,9 @@ class ReportController extends Controller
 
 
 		/*$company_name = request('company_name');
-		
+
 		*/
-		$sql = "SELECT "; 
+		$sql = "SELECT ";
 		$sql .= "b.name, ";
 		$sql .= "c.name as company_name, ";
 		$sql .= "a.login_date, ";
@@ -93,16 +93,16 @@ class ReportController extends Controller
 			$sql .= " AND c.id = ".$agentId;
 		}
 		if(null != $coordinator && strlen($coordinator) > 0 && null != $companyId && strlen($companyId) > 0){
-	
-			$sql .= " AND a.company_id = ".$companyId);
+
+			$sql .= " AND a.company_id = ".$companyId;
 		}
 
 		if(null != $college && strlen($college) > 0){
 			if(strlen($college) > 0){
-				$sql .= " AND b.college like '".$college."' ";	
+				$sql .= " AND b.college like '".$college."' ";
 			}
 
-			
+
 		}
 
 
@@ -116,12 +116,12 @@ class ReportController extends Controller
 		$logs = DB::select(DB::raw($sql));
 
 		//$logs = User::all();
-		
+
 		//$logs = GenericResources::collection($logs);
 		//return $logs;
 
         $report = $this->prepareReport($logs);
-		
+
 	/*	$report = view(
 				'report', ['logs' => $logs]
 			)->render();
@@ -136,12 +136,12 @@ class ReportController extends Controller
 		SELECT date_format(sec_to_time(SUM(TIMEDIFF(timestamp(logout_date),timestamp(login_date)))) , '%H:%i') as accumulated_time,student_id  FROM student_ojt_attendance_log log LEFT JOIN user student ON student.id = log.student_id GROUP BY log.student_id;
 		*/
 
-		$sql = "SELECT "; 
+		$sql = "SELECT ";
 		$sql .= "date_format(sec_to_time(SUM(TIMEDIFF(timestamp(logout_date),timestamp(login_date)))) , '%H:%i') as accumulated_time, ";
 		$sql .= "student.name as student_name, ";
 		$sql .= "company.name as company_name, ";
 		$sql .= "student_id ";
-	
+
 		$sql .= "FROM student_ojt_attendance_log log ";
 		$sql .= "LEFT JOIN user student ON student.id = log.student_id AND student.accounttype = 1 ";
 		$sql .= "LEFT JOIN user company ON company.id = log.company_id AND company.accounttype = 3 ";
