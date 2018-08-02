@@ -10,7 +10,7 @@ class FingerPrintController extends Controller
 
 	public function signInOff($id)
     {
-        $sqlCompany = "select company_id from user where id = {$id}";
+        $sqlCompany = "select company_id from company_ojt where user_id IN (select id from resume_details where user_id = {$id}) and accepted";
         $user = DB::select(DB::raw($sqlCompany));
         $company_id = $user[0]->company_id;
 
