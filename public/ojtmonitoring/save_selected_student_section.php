@@ -8,7 +8,7 @@ if (isset($_POST['agentId'])) {
 	
 	$sectionName = $_POST['sectionName'];
 
-	$sql = "update user set section ='".$_POST['sectionName']."', section_id = (SELECT id FROM section WHERE section_name = '".$_POST['sectionName']."' ) where id = ".$_POST['agentId'];
+	$sql = "update user set section ='".$_POST['sectionName']."', section_approved = false ,section_id = (SELECT id FROM section WHERE section_name = '".$_POST['sectionName']."' ) where id = ".$_POST['agentId'];
 
 	error_log($sql);
 
