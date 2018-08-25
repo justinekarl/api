@@ -238,7 +238,7 @@ if($checker === 0){
 	 error_log("update educational_background info College".print_r($result,true));
 
 
-	 $updateRef1 = "UPDATE resume_references SET name = '".$refName1."', address = '".$refAddress1."',phone_number = '".$refPhone1."',occupation = '".$refOccupation1."' WHERE id = ".$_POST['referenceId1'];
+	 $updateRef1 = "UPDATE resume_references SET name = '".$refName1."', address = '".$refAddress1."',phone_number = '".$refPhone1."',occupation = '".$refOccupation1."' WHERE id = ".$referenceId1;
 
 	 error_log($updateRef1);
 	 $result=mysqli_query($link,
@@ -247,7 +247,7 @@ if($checker === 0){
 	 error_log("update resume_references 1 info".print_r($result,true));
 
 
-	  $updateRef2 = "UPDATE resume_references SET name = '".$refName2."', address = '".$refAddress2."',phone_number = '".$refPhone2."',occupation = '".$refOccupation2."' WHERE id = ".$_POST['referenceId2'];
+	  $updateRef2 = "UPDATE resume_references SET name = '".$refName2."', address = '".$refAddress2."',phone_number = '".$refPhone2."',occupation = '".$refOccupation2."' WHERE id = ".$referenceId2;
 
 	 error_log($updateRef2);
 	 $result=mysqli_query($link,
@@ -256,7 +256,7 @@ if($checker === 0){
 	 error_log("update resume_references 2 info".print_r($result,true));
 
 
-	 $updateRef3 = "UPDATE resume_references SET name = '".$refName3."', address = '".$refAddress3."',phone_number = '".$refPhone3."',occupation = '".$refOccupation3."' WHERE id = ".$_POST['referenceId3'];
+	 $updateRef3 = "UPDATE resume_references SET name = '".$refName3."', address = '".$refAddress3."',phone_number = '".$refPhone3."',occupation = '".$refOccupation3."' WHERE id = ".$referenceId3;
 
 	 error_log($updateRef3);
 	 $result=mysqli_query($link,

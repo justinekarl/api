@@ -265,3 +265,22 @@ CREATE TABLE company_student_rating(id int not null auto_increment,
                                     rating int,
                                     remarks TEXT,
                                     primary key(id));
+
+
+--**********************2017-07-31*******************************************
+
+ALTER TABLE user ADD COLUMN section_approved BOOLEAN DEFAULT false;
+ALTER TABLE user ADD COLUMN section_approved_date date;
+
+
+--**********************************
+
+CREATE TABLE messages(id int not null auto_increment,
+					 sender_id int,
+					 recipient_id int,
+					 message_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+					 message text,
+					 sender_type int,
+					 primary key(id)
+					);
+
