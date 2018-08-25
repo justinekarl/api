@@ -114,6 +114,9 @@ class ReportController extends Controller
 //		return $student_name;
 		error_log($sql);
 		$logs = DB::select(DB::raw($sql));
+		error_log(print_r($logs, true));
+
+        error_log(print_r("JUSTINE KARL REPORT ONLY", true));
 
 		//$logs = User::all();
 
@@ -121,6 +124,8 @@ class ReportController extends Controller
 		//return $logs;
 
         $report = $this->prepareReport($logs);
+
+        error_log(print_r($report, true));
 
 	/*	$report = view(
 				'report', ['logs' => $logs]
@@ -140,25 +145,31 @@ class ReportController extends Controller
 		$sql .= "date_format(sec_to_time(SUM(TIMEDIFF(timestamp(logout_date),timestamp(login_date)))) , '%H:%i') as accumulated_time, ";
 		$sql .= "student.name as student_name, ";
 		$sql .= "company.name as company_name, ";
-		$sql .= "student_id ";
+		$sql .= "log.student_id,student.rating as rating, trim(COALESCE(csr.remarks,'')) as remarks, ";
+		$sql .= "ROUND((sum(TIME_TO_SEC(TIMEDIFF(timestamp(logout_date),timestamp(login_date)))) * 100  / ((select ojt_hours FROM user where id = student.id)*60*60)) ,2) as percentage   ";
 
 		$sql .= "FROM student_ojt_attendance_log log ";
 		$sql .= "LEFT JOIN user student ON student.id = log.student_id AND student.accounttype = 1 ";
 		$sql .= "LEFT JOIN user company ON company.id = log.company_id AND company.accounttype = 3 ";
+		$sql .= "LEFT JOIN company_student_rating csr ON csr.student_id = student.id ";
 		$sql .= "WHERE student.id IN (SELECT user_id FROM resume_details WHERE approved ) ";
 
-		$sql .= " GROUP BY log.student_id,log.company_id ";
+		$sql .= " GROUP BY log.student_id,log.company_id,rating,remarks ";
 
 
 		error_log($sql);
 
 		$logs = DB::select(DB::raw($sql));
         error_log(print_r($logs, true));
+
+        error_log(print_r("JUSTINE KARL WEEKLY REPORT AAAA", true));
 		/*$report = view(
 				'weekly', ['logs' => $logs]
 			)->render();
 		error_log($report);*/
         $report = $this->prepareWeeklyReport($logs);
+
+        error_log(print_r("AAAA ", true));
 		return json_encode(['data' => $report]);
 	}
 
@@ -207,55 +218,67 @@ class ReportController extends Controller
         $file .= "  </table>";
 
         $file .= " </html>";
+
+       
+       
         return $file;
     }
 
     public function prepareWeeklyReport($logs)
     {
 
+    	 error_log(print_r("HERE", true));	
+
         $file = "<html>";
-        $file .= "<table colspan=5 rowspan=5 border=3>";
+        $file .= "<table colspan=6 rowspan=6 border=3>";
         $file .= "<tr>";
-        $file .= "<td>";
-        $file .= "  <strong>Student Name</strong>";
+        $file .= "	<td>";
+        $file .= " 		 <strong>Student Name</strong>";
         $file .= "  </td>";
         $file .= "      <td>";
         $file .= "        <strong>Company</strong>";
         $file .= "        </td>";
         $file .= "      <td>";
-        $file .= "          <strong>Login Date/Time In</strong>";
-        $file .= "       </td>";
-        $file .= "       <td>";
-        $file .= "            <strong>Logout Date/Time Out</strong>";
+        $file .= "        <strong>Accumulated Time</strong>";
         $file .= "        </td>";
-        $file .= "        <td>";
-        $file .= "            <strong>Logged in through</strong>";
+         $file .= "      <td>";
+        $file .= "        <strong>OJT Completion % </strong>";
+        $file .= "        </td>";
+        $file .= "     	 <td>";
+         $file .= "        <strong>Rating Grade>";
+        $file .= "        </td>";
+        $file .= "     	 <td>";
+         $file .= "        <strong>Remarks</strong>";
         $file .= "        </td>";
         $file .= "     </tr>";
 
         foreach ($logs as $log){
             $file .= "  <tr>";
             $file .= "  <td>";
-            $file .= "$log->name";
+            $file .= "$log->student_name";
             $file .= "    </td>";
             $file .= "      <td>";
             $file .= "$log->company_name";
             $file .= "   </td>";
-            $file .= "    <td>";
-            $file .= null != $log->login_date ?  date('Y-m-d h:i:s a',strtotime($log->login_date)) : "";
-            $file .= "    </td>";
-            $file .= "    <td>";
-            $file .= null != $log->logout_date ? date('Y-m-d h:i:s a',strtotime($log->logout_date)) : "";
+             $file .= "      <td>";
+            $file .= "$log->accumulated_time";
             $file .= "   </td>";
-            $file .= "    <td>";
-            $file .= $log->finger_print_scanner ? 'Finger Print' : 'QR Code';
+            $file .= "      <td>";
+            $file .= (null != $log->percentage ? ($log->percentage > 100.0 ? 100 : $log->percentage) : 0) ." %";
             $file .= "   </td>";
+             $file .= "      <td>";
+            $file .= "$log->rating";
+            $file .= "   </td>";
+             $file .= "      <td>";
+            $file .= "$log->remarks";
+            $file .= "   </td>";
+           
             $file .= "   </tr>";
         }
         $file .= "  </table>";
 
         $file .= " </html>";
-        return $file;
+		return $file;
     }
 
 }
