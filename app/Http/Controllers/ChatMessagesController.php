@@ -70,4 +70,29 @@ class ChatMessagesController extends Controller
             "message" => $result
         ]);
     }
+
+    public function getLatestMessage($receiver_id){
+        //$sender_id = $request->input("sender_id");
+       // $receiver_id = $request->input("receiver_id");
+
+        $sql = " select chat_messages.*,user.username from chat_messages left join user on user.id = chat_messages.sender_id where receiver_id = {$receiver_id} and not is_read order by chat_message_id desc limit 1 ";
+        $result = DB::select( DB::raw($sql));
+
+         DB::table('chat_messages')
+            ->where('receiver_id', $receiver_id)
+            ->update(['is_read' => 1]);
+
+     $response = sizeof($result) > 0 ? true : false;
+     $message = '';
+     $sender = '';
+     if($response){
+        $message = $result[0]->message;
+        $sender = $result[0]->username;
+     }
+        return response()->json([
+            "response" => $response,
+            "message" => $message,
+            "sender" => $sender
+        ]);
+    }
 }

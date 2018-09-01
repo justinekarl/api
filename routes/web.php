@@ -22,3 +22,5 @@ Route::get('/ojtmonitoring/signInOff/{id}', 'FingerPrintController@signInOff');
 
 Route::post('/ojtmonitoring/sendMessage', 'ChatMessagesController@sendMessage');
 Route::post('/ojtmonitoring/getMessage', 'ChatMessagesController@getMessage');
+Route::get('/ojtmonitoring/getLatestMessage/{receiver_id}', 'ChatMessagesController@getLatestMessage');
+
