@@ -19,3 +19,6 @@ Route::get('/', function () {
 Route::post('ojtmonitoring/report', 'ReportController@generateReport');
 Route::post('ojtmonitoring/reportweekly', 'ReportController@printWeeklyReport');
 Route::get('/ojtmonitoring/signInOff/{id}', 'FingerPrintController@signInOff');
+
+Route::post('/ojtmonitoring/sendMessage', 'ChatMessagesController@sendMessage');
+Route::post('/ojtmonitoring/getMessage', 'ChatMessagesController@getMessage');
