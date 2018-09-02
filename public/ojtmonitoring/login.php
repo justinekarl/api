@@ -41,6 +41,16 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
         	if($key == 'accounttype'){
         		$accounttype_val = $value;
         	}
+
+            if($key == 'id'){
+                $updateOnlineQry = "UPDATE user SET online = TRUE WHERE id = ".$value;
+                error_log($updateOnlineQry);
+
+                $result11=mysqli_query($link,
+                            $updateOnlineQry);
+
+            }
+
             $response[$key] = $value;
         }
     }

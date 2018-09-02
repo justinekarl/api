@@ -286,3 +286,5 @@ CREATE TABLE messages(id int not null auto_increment,
 
 
 ALTER TABLE chat_messages ADD COLUMN read BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE user ADD COLUMN online BOOLEAN DEFAULT FALSE;

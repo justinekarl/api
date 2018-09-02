@@ -33,9 +33,9 @@ class ChatMessagesController extends Controller
 
         $result = DB::select( DB::raw($sql));
 
-         DB::table('chat_messages')
+        /* DB::table('chat_messages')
             ->where('sender_id', $sender_id)
-            ->update(['is_read' => 1]);
+            ->update(['is_read' => 1]);*/
 
         return response()->json([
             "response" => true,
@@ -58,13 +58,15 @@ class ChatMessagesController extends Controller
         $sql .= "	WHERE sender_id = {$receiver_id} AND receiver_id = {$sender_id}) a ";
         $sql .= "ORDER BY created_at ";
 
+
+
         $result = DB::select( DB::raw($sql));
 
-
+/*
         DB::table('chat_messages')
             ->where('sender_id', $sender_id)
             ->update(['is_read' => 1]);
-
+*/
         return response()->json([
             "response" => true,
             "message" => $result
@@ -78,21 +80,45 @@ class ChatMessagesController extends Controller
         $sql = " select chat_messages.*,user.username from chat_messages left join user on user.id = chat_messages.sender_id where receiver_id = {$receiver_id} and not is_read order by chat_message_id desc limit 1 ";
         $result = DB::select( DB::raw($sql));
 
-         DB::table('chat_messages')
+        DB::table('chat_messages')
             ->where('receiver_id', $receiver_id)
             ->update(['is_read' => 1]);
 
      $response = sizeof($result) > 0 ? true : false;
      $message = '';
      $sender = '';
+     $receiverId = '';
+     $senderId = '';
+     $updates = '';
+
      if($response){
         $message = $result[0]->message;
         $sender = $result[0]->username;
+        $receiverId = $result[0]->receiver_id;
+        $senderId = $result[0]->sender_id;
+
+      /*   $sql = " SELECT DISTINCT * ";
+        $sql .= " FROM ( ";
+        $sql .= "   SELECT *,(SELECT username FROM user WHERE id = sender_id) as sender ";
+        $sql .= "   FROM chat_messages ";
+        $sql .= "   WHERE sender_id = {$sender_id} AND receiver_id = {$receiver_id} ";
+        $sql .= "   UNION ";
+        $sql .= "   SELECT * ,(SELECT username FROM user WHERE id = sender_id) as sender";
+        $sql .= "   FROM chat_messages ";
+        $sql .= "   WHERE sender_id = {$receiver_id} AND receiver_id = {$sender_id}) a ";
+        $sql .= "ORDER BY created_at ";
+
+        $updates = DB::select( DB::raw($sql));*/
+
+
      }
         return response()->json([
             "response" => $response,
             "message" => $message,
-            "sender" => $sender
+            "sender" => $sender,
+            "receiverId" => $receiverId,
+            "senderId" => $senderId,
+            "updates" => $updates
         ]);
     }
 }

@@ -8,7 +8,7 @@ error_log("get teachers by courses selected by company");
 if (isset($_POST['agentid'])) {
     $agent_id = $_POST['agentid'];
     
-    $queryOjt = " SElECT id,name,username from user where trim(college) IN ( SELECT trim(college) from course_look_up where id IN (select course_id from company_course_to_accept where company_id = ".$agent_id.")) and accounttype = 2;
+    $queryOjt = " SElECT id,name,username,online from user where trim(college) IN ( SELECT trim(college) from course_look_up where id IN (select course_id from company_course_to_accept where company_id = ".$agent_id.")) and accounttype = 2;
 			";
 
 	 $teachers = [];

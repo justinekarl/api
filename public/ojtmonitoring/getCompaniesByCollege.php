@@ -9,7 +9,7 @@ if (isset($_POST['agentid'])) {
     $agent_id = $_POST['agentid'];
     $college = $_POST['college'];
 	
-	$queryOjt = " SELECT DISTINCT u.id,u.name,username,phonenumber,address
+	$queryOjt = " SELECT DISTINCT u.id,u.name,username,phonenumber,address,online
 			FROM user u 
 			LEFT JOIN company_course_to_accept ccta ON u.id = ccta.company_id
 			LEFT JOIN course_look_up clu ON clu.id = ccta.course_id
