@@ -141,6 +141,9 @@ class ReportController extends Controller
 		SELECT date_format(sec_to_time(SUM(TIMEDIFF(timestamp(logout_date),timestamp(login_date)))) , '%H:%i') as accumulated_time,student_id  FROM student_ojt_attendance_log log LEFT JOIN user student ON student.id = log.student_id GROUP BY log.student_id;
 		*/
 
+		$agentId = request('agentId');
+		error_log($agentId."JUSTINE");
+
 		$sql = "SELECT ";
 		$sql .= "date_format(sec_to_time(SUM(TIMEDIFF(timestamp(logout_date),timestamp(login_date)))) , '%H:%i') as accumulated_time, ";
 		$sql .= "student.name as student_name, ";
@@ -153,6 +156,10 @@ class ReportController extends Controller
 		$sql .= "LEFT JOIN user company ON company.id = log.company_id AND company.accounttype = 3 ";
 		$sql .= "LEFT JOIN company_student_rating csr ON csr.student_id = student.id ";
 		$sql .= "WHERE student.id IN (SELECT user_id FROM resume_details WHERE approved ) ";
+
+		if(null != $agentId && strlen($agentId) > 0){
+			$sql .= " AND log.company_id = ".$agentId;
+		}
 
 		$sql .= " GROUP BY log.student_id,log.company_id,rating,remarks ";
 
@@ -178,6 +185,7 @@ class ReportController extends Controller
 
         $file = "<html>";
         $file .= "<table colspan=5 rowspan=5 border=3>";
+        $file .= "<tr><td colspan=5> <strong> Report Results </strong> </td></tr>";
         $file .= "<tr>";
         $file .= "<td>";
         $file .= "  <strong>Student Name</strong>";
@@ -231,6 +239,7 @@ class ReportController extends Controller
 
         $file = "<html>";
         $file .= "<table colspan=6 rowspan=6 border=3>";
+        $file .= "<tr><td colspan=6> <strong> Weekly Report Results </strong> </td></tr>";
         $file .= "<tr>";
         $file .= "	<td>";
         $file .= " 		 <strong>Student Name</strong>";

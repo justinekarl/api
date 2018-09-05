@@ -8,7 +8,7 @@ if (isset($_POST['agentid']) && isset($_POST['college'])) {
     $agent_id = $_POST['agentid'];
     $college = $_POST['college'];
 
-    $pendingStudentAcctsQry = " SELECT CONCAT('student_id~',id),CONCAT('name~',name),CONCAT('accounttype~',accounttype),CONCAT('college~',college)
+    $pendingStudentAcctsQry = " SELECT CONCAT('student_id~',id),CONCAT('name~',name),CONCAT('accounttype~',accounttype),CONCAT('college~',college), CONCAT('gender~',gender)
     								   ,CONCAT('department~',department),CONCAT('approved~',approved),CONCAT('username~',username)
     							 FROM user WHERE accounttype = 1 AND approved IS FALSE AND college like '".$college."' ";
     $items = [];
