@@ -142,6 +142,7 @@ class ReportController extends Controller
 		*/
 
 		$agentId = request('agentId');
+		$college = request('college');
 		error_log($agentId."JUSTINE");
 
 		$sql = "SELECT ";
@@ -159,6 +160,10 @@ class ReportController extends Controller
 
 		if(null != $agentId && strlen($agentId) > 0){
 			$sql .= " AND log.company_id = ".$agentId;
+		}
+
+		if(null != $college && strlen($college) > 0){
+			$sql .= " AND student.college = '".$college."' ";
 		}
 
 		$sql .= " GROUP BY log.student_id,log.company_id,rating,remarks ";

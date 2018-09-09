@@ -67,7 +67,11 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
         		error_log("Coordinator account not yet approved");
         		$response["success"] = 0;
     			$response["message"] = "Must be approved by company.";
-        	}
+        	}else if($accounttype_val == 2){
+                error_log("Teacher Account not yet approved");
+                $response["success"] = 0;
+                $response["message"] = "Must be approved by Admin.";
+            }
         }else{
 
      	   $response["success"] = 1;

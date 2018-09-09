@@ -284,5 +284,15 @@ CREATE TABLE messages(id int not null auto_increment,
 
 ALTER TABLE user ADD COLUMN online BOOLEAN DEFAULT FALSE;
 
-ALTER TABLE chat_messages ADD COLUMN is_read BOOLEAN DEFAULT FALSE;
+CREATE TABLE `chat_messages` (
+  `chat_message_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sender_id` int(11) DEFAULT NULL,
+  `receiver_id` int(11) DEFAULT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_read` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`chat_message_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE user ADD COLUMN admin_teacher BOOLEAN DEFAULT false;

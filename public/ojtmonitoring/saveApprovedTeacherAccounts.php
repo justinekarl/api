@@ -5,15 +5,18 @@ $response = array();
 if (isset($_POST['agentId'])) {
 	error_log("Saving selected USER Account LIST -".$_POST['agentId']);
 
-	$studentAcctMap = $_POST['studentAcctMap'];
+	$teacherAcctMap = $_POST['teacherAcctMap'];
 
-	$jsonObjs = json_decode($studentAcctMap);
+	$jsonObjs = json_decode($teacherAcctMap);
 
 	foreach ($jsonObjs as $key => $value) {
-		error_log("Student ID -->".$key);
+		error_log("Teacher ID -->".$key);
 		error_log("Approved -->".$value);
 
-		$updateApproveQry = "UPDATE user SET approved = ".$value.",approved_by_teacher_id = ".$_POST['agentId'].",approved_date = current_date WHERE accounttype = 1 AND id = ".$key;
+		$approved_val =intval($value."");
+		$teacherId = intval($key);
+
+		$updateApproveQry = "UPDATE user SET approved = ".$approved_val.",approved_by_teacher_id = ".$_POST['agentId'].",approved_date = current_date WHERE accounttype = 2 AND id = ".$teacherId;
 
 		error_log($updateApproveQry);
 

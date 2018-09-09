@@ -74,19 +74,35 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
             error_log($insertedId);
 
              $response['returned_id'] = $insertedId;
-             $response['message'] = "Successfully created Student Account";
+             $response['message'] = "Successfully Created Student Account";
              $response['success'] = 1;
 
         }
 
 
         if($accounttype == 2) {
+        	$msg = "";
 
-            $teacherQry = "INSERT INTO user(username,password,teachernumber,name,department,phonenumber,accounttype,college,approved) VALUES('$user_name', '$password','$teacherNumber','$full_name','$department','$phonenumber','$accounttype','$college',true)";
-            $result=mysqli_query($link,$teacherQry);
+        	$queryTeacher = "SELECT count(*) cnt FROM user where  accounttype = 2 AND TRIM(college)='{$college}' AND admin_teacher IS TRUE ";
+		    $result_check2 = mysqli_query($link,$queryTeacher);
+		    $checker2 = (int) mysqli_fetch_assoc($result_check2)["cnt"];
 
+            error_log($checker2);
+
+
+		    if($checker2 > 0){
+		    	 $teacherQry = "INSERT INTO user(username,password,teachernumber,name,department,phonenumber,accounttype,college,approved) VALUES('$user_name', '$password','$teacherNumber','$full_name','$department','$phonenumber','$accounttype','$college',false)";
+		    	 $msg = "Successfully Created Teacher Account, Awaiting Approval from Admin.";
+		    }else{
+
+	            $teacherQry = "INSERT INTO user(username,password,teachernumber,name,department,phonenumber,accounttype,college,approved,admin_teacher) VALUES('$user_name', '$password','$teacherNumber','$full_name','$department','$phonenumber','$accounttype','$college',true,true)";
+	            $msg = "Successfully Created Teacher Account.";
+	            
+        	}
+
+			$result=mysqli_query($link,$teacherQry);
             error_log("studentQry".print_r($teacherQry,true));
-            $response['message'] = "Successfully created Teacher Account";
+            $response['message'] = $msg;
             $response['success'] = 1;
 
         }
