@@ -26,3 +26,7 @@ Route::get('/ojtmonitoring/getLatestMessage/{receiver_id}', 'ChatMessagesControl
 Route::get('/ojtmonitoring/assessment', 'AssessmentController@index');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
