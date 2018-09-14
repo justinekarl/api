@@ -318,4 +318,4 @@ CREATE TABLE student_weekly_practicum_task(
 	primary key(id)
 );
 
-ALTER TABLE student_weekly_practicum_task ADD COLUMN 
+ALTER TABLE student_weekly_practicum_task ADD COLUMN reviewed_by_id int;

@@ -389,6 +389,9 @@ class ReportController extends Controller
 
      	 	$file .= " <tr><td></td><td><center><strong>$log->comments</strong></center></td><td></td></tr>";
 
+
+     	 	$file .= " <tr><td></td><td><center><strong>Noted By : $log->company_name</strong></center></td><td></td></tr>";
+
      	 	$file .= " </table>";
      	 	$file .= "  <div class='blank-div'>";
 
