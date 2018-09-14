@@ -296,3 +296,26 @@ CREATE TABLE `chat_messages` (
 ) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 ALTER TABLE user ADD COLUMN admin_teacher BOOLEAN DEFAULT false;
+
+CREATE TABLE student_weekly_practicum(
+	id int not null auto_increment,
+	week int,
+	staff_name text,
+	start_date date,
+	end_date date,
+	student_id int,
+	comments text,
+	skills_gained text,
+	saved_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	primary key(id)
+	);
+
+CREATE TABLE student_weekly_practicum_task(
+	id int not null auto_increment,
+	practicum_id int,
+	task1 text,task2 text,task3 text,task4 text,task5 text,task6 text,task7 text,
+	remarks1 text,remarks2 text,remarks3 text,remarks4 text,remarks5 text,remarks6 text,remarks7 text,
+	primary key(id)
+);
+
+ALTER TABLE student_weekly_practicum_task ADD COLUMN 
