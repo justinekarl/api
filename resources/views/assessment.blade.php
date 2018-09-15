@@ -9,14 +9,14 @@
             <input type="hidden" id="student_id" name="student_id" value="{{$student_id}}">
             <input type="hidden" id="id" name="id" value="{{isset($result) ? $result->id : '' }}">
 
-            <div class="form-group row bg-dark text-light">
+            <div class="row bg-dark text-light">
                 <h1>
                     Assessment
                 </h1>
             </div>
 
             <div class="form-group row bg-dark text-light">
-                <label class="col-sm-12 col-form-label text-center text-justify">
+                <label class="col-sm-12 text-center text-justify">
                     <strong>
                         Please rate the practicumer using the scale below: <br>
                         5 = Excellent<br>
