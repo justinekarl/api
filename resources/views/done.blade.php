@@ -9,7 +9,6 @@
                 <div class="container">
                     <h1>
                         Assessment Saved
-                        {{$data}}
                     </h1>
                 </div>
             </div>
