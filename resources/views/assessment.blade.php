@@ -116,7 +116,7 @@
                         </div>
 
                         <div class="col-sm-12">
-                            <textarea name="1_comments" id="1_comments" required>{{isset($result) ? $result->{'1_comments'} : '' }}</textarea>
+                            <textarea class="form-control" name="1_comments" id="1_comments" required>{{isset($result) ? $result->{'1_comments'} : '' }}</textarea class="form-control">
                         </div>
                     </div>
                 </div>
@@ -210,7 +210,7 @@
                         </div>
 
                         <div class="col-sm-12">
-                            <textarea name="2_comments" id="2_comments" required>{{isset($result) ? $result->{'2_comments'} : '' }}</textarea>
+                            <textarea class="form-control" name="2_comments" id="2_comments" required>{{isset($result) ? $result->{'2_comments'} : '' }}</textarea class="form-control">
                         </div>
                     </div>
                 </div>
@@ -321,7 +321,7 @@
                         </div>
 
                         <div class="col-sm-12">
-                            <textarea name="3_comments" id="3_comments" required>{{isset($result) ? $result->{'3_comments'} : '' }}</textarea>
+                            <textarea class="form-control" name="3_comments" id="3_comments" required>{{isset($result) ? $result->{'3_comments'} : '' }}</textarea class="form-control">
                         </div>
                     </div>
                 </div>
@@ -384,7 +384,7 @@
                         </div>
 
                         <div class="col-sm-12">
-                            <textarea name="4_comments" id="4_comments" required>{{isset($result) ? $result->{'4_comments'} : '' }}</textarea>
+                            <textarea class="form-control" name="4_comments" id="4_comments" required>{{isset($result) ? $result->{'4_comments'} : '' }}</textarea class="form-control">
                         </div>
                     </div>
                 </div>
@@ -447,7 +447,7 @@
                         </div>
 
                         <div class="col-sm-12">
-                            <textarea name="5_comments" id="5_comments" required>{{isset($result) ? $result->{'5_comments'} : '' }}</textarea>
+                            <textarea class="form-control" name="5_comments" id="5_comments" required>{{isset($result) ? $result->{'5_comments'} : '' }}</textarea class="form-control">
                         </div>
                     </div>
 
