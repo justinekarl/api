@@ -40,5 +40,6 @@ class Assessment extends Model
         '5_2',
         '5_3',
         '5_comments',
+        'rating'
         ];
 }

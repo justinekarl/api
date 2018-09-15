@@ -41,6 +41,9 @@ class AssessmentController extends Controller
         //$result =$this->gardenServices->update($request->only($this->gardenServices->getModel()->fillable), $id);
       //  $test = $request->only($this->assessment->fillable);
 
+        $aps = $this->getAverage($request);
+        $request->merge(['rating' => $aps]);
+
         if(null !== $request->input('id')){
             $record = $this->assessment->find($request->input('id'));
             $record->fill($request->only($this->assessment->fillable));
@@ -55,4 +58,29 @@ class AssessmentController extends Controller
             ['data' => json_encode($result)]
             );
     }
+
+    public function getAverage(Request $request)
+    {
+
+        $a=$request->input('1_1') + $request->input('1_2') + $request->input('1_3') + $request->input('1_4')
+            + $request->input('1_5');
+
+
+        $b=$request->input('2_1') + $request->input('2_2') + $request->input('2_3') + $request->input('2_4')
+            + $request->input('2_5');
+
+        $c=$request->input('3_1') + $request->input('3_2') + $request->input('3_3') + $request->input('3_4')
+            + $request->input('3_5') + $request->input('3_6');
+
+        $d=$request->input('4_1') + $request->input('4_2') + $request->input('4_3');
+
+        $e=$request->input('5_1') + $request->input('5_2') + $request->input('5_3');
+
+        $ave = ($a/5) + ($b/5) + ($c/5) + ($d/3) + ($e/3);
+
+        $aps = (($ave * 50) / 5) + 50;
+
+        return $aps;
+    }
+
 }
