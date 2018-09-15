@@ -24,7 +24,10 @@ Route::get('/ojtmonitoring/signInOff/{id}', 'FingerPrintController@signInOff');
 Route::post('/ojtmonitoring/sendMessage', 'ChatMessagesController@sendMessage');
 Route::post('/ojtmonitoring/getMessage', 'ChatMessagesController@getMessage');
 Route::get('/ojtmonitoring/getLatestMessage/{receiver_id}', 'ChatMessagesController@getLatestMessage');
-Route::get('/ojtmonitoring/assessment', 'AssessmentController@index');
+
+Route::get('/ojtmonitoring/assessment/{company_id}/{student_id}', 'AssessmentController@index');
+Route::post('/assess', 'AssessmentController@save')->name('assess');
+
 
 
 

@@ -7,8 +7,12 @@
                 <div class="card-header">{{ __('Assessment') }}</div>
 
                 <div class="container">
-                    <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                    <form method="POST" action="{{ route('assess') }}" aria-label="{{ __('Login') }}">
                         @csrf
+
+                        <input type="text" id="company_id" name="company_id" value="{{$company_id}}">
+                        <input type="text" id="student_id" name="student_id" value="{{$student_id}}">
+
                         <div class="form-group row">
                             <label class="col-sm-12 col-form-label ">
                                 <strong>
@@ -31,7 +35,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="1_1" id="1_1">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -47,7 +51,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="1_2" id="1_2">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -63,7 +67,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="1_3" id="1_3">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -79,7 +83,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="1_4" id="1_4">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -95,7 +99,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="1_5" id="1_5">
-                                            <option value="1">1</option>
+                                            <option value="1" selected selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -110,7 +114,7 @@
                                     </div>
 
                                     <div class="col-sm-4">
-                                        <textarea name="1_comments" id="1_comments"></textarea>
+                                        <textarea name="1_comments" id="1_comments" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +129,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="2_1" id="2_1">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -141,7 +145,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="2_2" id="2_2">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -157,7 +161,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="2_3" id="2_3">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -173,7 +177,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="2_4" id="2_4">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -189,7 +193,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="2_5" id="2_5">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -204,7 +208,7 @@
                                     </div>
 
                                     <div class="col-sm-4">
-                                        <textarea name="2_comments" id="2_comments"></textarea>
+                                        <textarea name="2_comments" id="2_comments" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -220,7 +224,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="3_1" id="3_1">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -236,7 +240,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="3_2" id="3_2">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -252,7 +256,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="3_3" id="3_3">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -268,7 +272,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="3_4" id="3_4">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -284,7 +288,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="3_5" id="3_5">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -300,7 +304,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="3_6" id="3_6">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -315,7 +319,7 @@
                                     </div>
 
                                     <div class="col-sm-4">
-                                        <textarea name="3_comments" id="3_comments"></textarea>
+                                        <textarea name="3_comments" id="3_comments" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -330,7 +334,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="4_1" id="4_1">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -346,7 +350,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="4_2" id="4_2">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -362,7 +366,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="4_3" id="4_3">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -378,7 +382,7 @@
                                     </div>
 
                                     <div class="col-sm-4">
-                                        <textarea name="4_comments" id="4_comments"></textarea>
+                                        <textarea name="4_comments" id="4_comments" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -394,7 +398,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="5_1" id="5_1">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -410,7 +414,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="5_2" id="5_2">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -426,7 +430,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="5_3" id="5_3">
-                                            <option value="1">1</option>
+                                            <option value="1" selected>1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -441,11 +445,21 @@
                                     </div>
 
                                     <div class="col-sm-4">
-                                        <textarea name="5_comments" id="5_comments"></textarea>
+                                        <textarea name="5_comments" id="5_comments" required></textarea>
                                     </div>
                                 </div>
                             </div>
 
+
+
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-12 text-right">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Submit') }}
+                                </button>
+                            </div>
                         </div>
 
                     </form>
