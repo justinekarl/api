@@ -1,69 +1,454 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Login') }}</div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">{{ __('Assessment') }}</div>
 
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                            @csrf
+                <div class="container">
+                    <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-form-label ">
+                                <strong>
+                                    Please rate the practicumer using the scale below: <br>
+                                    5 = Excellent<br>
+                                    4 = Very Good<br>
+                                    3 = Good<br>
+                                    2 = Fair<br>
+                                    1 = Poor
+                                </strong>
+                            </label>
 
-                            <div class="form-group row">
-                                <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <div class="col-md-12">
+                                <hr>
+                                <h5> 1. Personal Characteristics </h5>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        1.1 Dresses neatly and appropriately for office work
+                                    </div>
 
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-
-                                    @if ($errors->has('email'))
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
+                                    <div class="col-sm-4">
+                                        <select name="1_1" id="1_1">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        1.2 Has a pleasing personality, is cheerful and good humored
+                                    </div>
 
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                    @if ($errors->has('password'))
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                    @endif
+                                    <div class="col-sm-4">
+                                        <select name="1_2" id="1_2">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <div class="col-md-6 offset-md-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        1.3 Possesses above average oral and written communication skills
+                                    </div>
 
-                                        <label class="form-check-label" for="remember">
-                                            {{ __('Remember Me') }}
-                                        </label>
+                                    <div class="col-sm-4">
+                                        <select name="1_3" id="1_3">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        1.4 Project self-confidence and enthusiasm
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="1_4" id="1_4">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        1.5 Demonstrates leadership potential
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="1_5" id="1_5">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Comments
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <textarea name="1_comments" id="1_comments"></textarea>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Login') }}
-                                    </button>
+                            <div class="col-md-12">
+                                <hr>
+                                <h5> 2. Attitude towards the job </h5>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        2.1 Shows marked interest and pride
+                                    </div>
 
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
+                                    <div class="col-sm-4">
+                                        <select name="2_1" id="2_1">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        2.2 Has an exceptional sense of duty and can always be depended upon to do a good job
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="2_2" id="2_2">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        2.3 Cooperates willingly and fits easily to the group
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="2_3" id="2_3">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        2.4 Recognizes the authority and responsibilities of his/her superiors and provide them with the necessary support services and assistance required or sought
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="2_4" id="2_4">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        2.5 Takes initiatives to update one’s technical and/or non-technical knowledge and skills
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="2_5" id="2_5">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Comments
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <textarea name="2_comments" id="2_comments"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+
+
+                            <div class="col-md-12">
+                                <hr>
+                                <h5> 3. Job Performance </h5>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        3.1 Delivers promptly assigned task/ responsibilities
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="3_1" id="3_1">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        3.2 Performs assigned tasks with minimum supervision
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="3_2" id="3_2">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        3.3 Willingly accepts work assignments and/ or responsibilities
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="3_3" id="3_3">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        3.4 Delivers assigned tasks within acceptable level of quality
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="3_4" id="3_4">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        3.5 Performs assigned tasks in an organized and orderly manner
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="3_5" id="3_5">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        3.6 Exhibits ability to function well even under pressure
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="3_6" id="3_6">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Comments
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <textarea name="3_comments" id="3_comments"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr>
+                                <h5> 4. Adherence to Company Policies   </h5>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        4.1 Present at work most of the time
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="4_1" id="4_1">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        4.2 Comes to work on time
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="4_2" id="4_2">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        4.3 Adheres to company and regulations
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="4_3" id="4_3">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Comments
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <textarea name="4_comments" id="4_comments"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <hr>
+                                <h5> 5. Competence </h5>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        5.1 Shows mastery of generally accepted principles relevant to the course as applied to different situations.
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="5_1" id="5_1">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        5.2 Shows adequate knowledge and skills in performing assigned tasks.
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="5_2" id="5_2">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        5.3 Shows ability to perform routine office procedures.
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="5_3" id="5_3">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Comments
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <textarea name="5_comments" id="5_comments"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>

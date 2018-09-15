@@ -295,4 +295,113 @@ class ReportController extends Controller
 		return $file;
     }
 
+    public function printStudentWeekly(){
+
+    	error_log(print_r("ABC", true));	
+    	 $student_id =request('student_id');
+
+    	$sql  = "
+		    SELECT student.name as student_name,
+		       company.name as company_name,
+		       task1,
+			task2,
+			task3,
+			task4,
+			task5,
+			task6,
+			task7,
+			remarks1,
+			remarks2,
+			remarks3,
+			remarks4,
+			remarks5,
+			remarks6,
+			remarks7,
+		        comments,
+			skills_gained,
+			staff_name,
+			week,
+			start_date,
+			end_date
+		FROM user student 
+		LEFT JOIN student_weekly_practicum swp ON swp.student_id = student.id
+		LEFT JOIN student_weekly_practicum_task swpt ON swpt.practicum_id = swp.id
+		LEFT JOIN user company ON company.id = swpt.reviewed_by_id
+		WHERE student.accounttype = 1
+		AND student_id = {$student_id}
+		ORDER BY week
+
+    	";
+
+
+
+		error_log($sql);
+
+		$logs = DB::select(DB::raw($sql));
+        error_log(print_r($logs, true));
+        $report = $this->prepareStudentWeeklyReport($logs);
+
+        return json_encode(['data' => $report]);
+    }
+
+     public function prepareStudentWeeklyReport($logs){
+     	 error_log(print_r("prepareStudentWeeklyReport", true));
+
+
+     	 $file = "<html>";
+     	 foreach ($logs as $log){
+     	 	$file .= "<table colspan=8 border=3>";
+     	 	$file .= "<tr><td colspan=6> <center><strong> Student Practicum Weekly Report </strong></center> </td></tr>";
+     	 	$file .= "<tr><td colspan=6> Name : <strong> $log->student_name </strong> </td></tr>";
+     	 	$file .= "<tr><td colspan=6> Supervising Staff : <strong> $log->staff_name </strong> </td></tr>";
+     	 	$file .= "<tr><td colspan=6> Week No. : <strong> $log->week </strong> </td></tr>";
+
+
+     	 	$file .= " <tr><td></td><td> <strong>Period Coverage:</strong>  Start Date : <strong> ";
+     	 	$file .= null != $log->start_date ?  date('m-d-Y',strtotime($log->start_date)) : "";
+     	 	$file .= "</strong> End Date : <strong>";
+     	 	$file .= null != $log->end_date ?  date('m-d-Y',strtotime($log->end_date)) : "";
+     	 	$file .= "</strong></td><td></td></tr>";
+
+     	 	$file .= " <tr><td><strong><center>DAY</center></strong></td><td><strong><center>TASK/ACTIVITY</center></strong></td><td><strong><center>REMARKS</center></strong></td></tr>";
+
+
+     	 	$file .= " <tr><td><strong><center>1</center></strong></td><td><strong><center>$log->task1</center></strong></td><td><strong><center>$log->remarks1</center></strong></td></tr>";
+
+     	 	$file .= " <tr><td><strong><center>2</center></strong></td><td><strong><center>$log->task2</center></strong></td><td><strong><center>$log->remarks2</center></strong></td></tr>";
+
+     	 	$file .= " <tr><td><strong><center>3</center></strong></td><td><strong><center>$log->task3</center></strong></td><td><strong><center>$log->remarks3</center></strong></td></tr>";
+
+     	 	$file .= " <tr><td><strong><center>4</center></strong></td><td><strong><center>$log->task4</center></strong></td><td><strong><center>$log->remarks4</center></strong></td></tr>";
+
+     	 	$file .= " <tr><td><strong><center>5</center></strong></td><td><strong><center>$log->task5</center></strong></td><td><strong><center>$log->remarks5</center></strong></td></tr>";
+
+     	 	$file .= " <tr><td><strong><center>6</center></strong></td><td><strong><center>$log->task6</center></strong></td><td><strong><center>$log->remarks6</center></strong></td></tr>";
+
+     	 	$file .= " <tr><td><strong><center>7</center></strong></td><td><strong><center>$log->task7</center></strong></td><td><strong><center>$log->remarks7</center></strong></td></tr>";
+
+
+     	 	$file .= " <tr><td></td><td><center>Knowledge/ Skills Gained and/or Difficulties Encountered for the Period.</center></td><td></td></tr>";
+
+     	 	$file .= " <tr><td></td><td><center><strong>$log->skills_gained</strong></center></td><td></td></tr>";
+
+     	 	$file .= " <tr><td></td><td><center>Comments and Suggestions:</center></td><td></td></tr>";
+
+     	 	$file .= " <tr><td></td><td><center><strong>$log->comments</strong></center></td><td></td></tr>";
+
+
+     	 	$file .= " <tr><td></td><td><center><strong>Noted By : $log->company_name</strong></center></td><td></td></tr>";
+
+     	 	$file .= " </table>";
+     	 	$file .= "  <div class='blank-div'>";
+
+     	 }
+
+     	 $file .= " </html>";
+
+
+     	return $file;
+        
+     }
+
 }
