@@ -344,6 +344,350 @@ class ReportController extends Controller
         return json_encode(['data' => $report]);
     }
 
+
+    public function printStudentEvaluation(){
+    	error_log(print_r("ZZZZ", true));	
+    	$student_id =request('student_id');
+
+    	$sql  = "
+		    SELECT CASE WHEN 1_1 = 1 THEN 'Poor'
+		    			WHEN 1_1 = 2 THEN 'Fair'
+		    			WHEN 1_1 = 3 THEN 'Good'
+		    			WHEN 1_1 = 4 THEN 'Very Good'
+		    			WHEN 1_1 = 5 THEN 'Excellent'
+		    		END
+		     as a1,
+			        CASE WHEN 1_2 = 1 THEN 'Poor'
+			    			WHEN 1_2 = 2 THEN 'Fair'
+			    			WHEN 1_2 = 3 THEN 'Good'
+			    			WHEN 1_2 = 4 THEN 'Very Good'
+			    			WHEN 1_2 = 5 THEN 'Excellent'
+			    		END
+		     as a2,
+		        	CASE WHEN 1_3 = 1 THEN 'Poor'
+			    			WHEN 1_3 = 2 THEN 'Fair'
+			    			WHEN 1_3 = 3 THEN 'Good'
+			    			WHEN 1_3 = 4 THEN 'Very Good'
+			    			WHEN 1_3 = 5 THEN 'Excellent'
+			    		END
+			 as a3,
+		        CASE WHEN 1_4 = 1 THEN 'Poor'
+			    			WHEN 1_4 = 2 THEN 'Fair'
+			    			WHEN 1_4 = 3 THEN 'Good'
+			    			WHEN 1_4 = 4 THEN 'Very Good'
+			    			WHEN 1_4 = 5 THEN 'Excellent'
+			    		END
+			 as a4,
+		        CASE WHEN 1_5 = 1 THEN 'Poor'
+			    			WHEN 1_5 = 2 THEN 'Fair'
+			    			WHEN 1_5 = 3 THEN 'Good'
+			    			WHEN 1_5 = 4 THEN 'Very Good'
+			    			WHEN 1_5 = 5 THEN 'Excellent'
+			    		END
+			 as a5,
+		       1_comments as a_comments,
+		        CASE WHEN 2_1 = 1 THEN 'Poor'
+			    			WHEN 2_1 = 2 THEN 'Fair'
+			    			WHEN 2_1 = 3 THEN 'Good'
+			    			WHEN 2_1 = 4 THEN 'Very Good'
+			    			WHEN 2_1 = 5 THEN 'Excellent'
+			    		END
+			 as b1,
+		        CASE WHEN 2_2 = 1 THEN 'Poor'
+			    			WHEN 2_2 = 2 THEN 'Fair'
+			    			WHEN 2_2 = 3 THEN 'Good'
+			    			WHEN 2_2 = 4 THEN 'Very Good'
+			    			WHEN 2_2 = 5 THEN 'Excellent'
+			    		END
+			 as b2,
+		        CASE WHEN 2_3 = 1 THEN 'Poor'
+			    			WHEN 2_3 = 2 THEN 'Fair'
+			    			WHEN 2_3 = 3 THEN 'Good'
+			    			WHEN 2_3 = 4 THEN 'Very Good'
+			    			WHEN 2_3 = 5 THEN 'Excellent'
+			    		END
+			 as b3,
+		        CASE WHEN 2_4 = 1 THEN 'Poor'
+			    			WHEN 2_4 = 2 THEN 'Fair'
+			    			WHEN 2_4 = 3 THEN 'Good'
+			    			WHEN 2_4 = 4 THEN 'Very Good'
+			    			WHEN 2_4 = 5 THEN 'Excellent'
+			    		END 
+			 as b4,
+		        CASE WHEN 2_5 = 1 THEN 'Poor'
+			    			WHEN 2_5 = 2 THEN 'Fair'
+			    			WHEN 2_5 = 3 THEN 'Good'
+			    			WHEN 2_5 = 4 THEN 'Very Good'
+			    			WHEN 2_5 = 5 THEN 'Excellent'
+			    		END  
+			 as b5,
+		       2_comments as b_comments,
+		        CASE WHEN 3_1 = 1 THEN 'Poor'
+			    			WHEN 3_1 = 2 THEN 'Fair'
+			    			WHEN 3_1 = 3 THEN 'Good'
+			    			WHEN 3_1 = 4 THEN 'Very Good'
+			    			WHEN 3_1 = 5 THEN 'Excellent'
+			    		END  
+			 as c1,
+		         CASE WHEN 3_2 = 1 THEN 'Poor'
+			    			WHEN 3_2 = 2 THEN 'Fair'
+			    			WHEN 3_2 = 3 THEN 'Good'
+			    			WHEN 3_2 = 4 THEN 'Very Good'
+			    			WHEN 3_2 = 5 THEN 'Excellent'
+			    		END  
+			 as c2,
+		        CASE WHEN 3_3 = 1 THEN 'Poor'
+			    			WHEN 3_3 = 2 THEN 'Fair'
+			    			WHEN 3_3 = 3 THEN 'Good'
+			    			WHEN 3_3 = 4 THEN 'Very Good'
+			    			WHEN 3_3 = 5 THEN 'Excellent'
+			    		END
+			 as c3,
+		       CASE WHEN 3_4 = 1 THEN 'Poor'
+			    			WHEN 3_4 = 2 THEN 'Fair'
+			    			WHEN 3_4 = 3 THEN 'Good'
+			    			WHEN 3_4 = 4 THEN 'Very Good'
+			    			WHEN 3_4 = 5 THEN 'Excellent'
+			    		END
+			 as c4,
+		        CASE WHEN 3_5 = 1 THEN 'Poor'
+			    			WHEN 3_5 = 2 THEN 'Fair'
+			    			WHEN 3_5 = 3 THEN 'Good'
+			    			WHEN 3_5 = 4 THEN 'Very Good'
+			    			WHEN 3_5 = 5 THEN 'Excellent'
+			    		END
+			 as c5,
+		        CASE WHEN 3_6 = 1 THEN 'Poor'
+			    			WHEN 3_6 = 2 THEN 'Fair'
+			    			WHEN 3_6 = 3 THEN 'Good'
+			    			WHEN 3_6 = 4 THEN 'Very Good'
+			    			WHEN 3_6 = 5 THEN 'Excellent'
+			    		END
+			 as c6,
+		       3_comments as c_comments,
+		        CASE WHEN 4_1 = 1 THEN 'Poor'
+			    			WHEN 4_1 = 2 THEN 'Fair'
+			    			WHEN 4_1 = 3 THEN 'Good'
+			    			WHEN 4_1 = 4 THEN 'Very Good'
+			    			WHEN 4_1 = 5 THEN 'Excellent'
+			    		END
+			 as d1,
+		        CASE WHEN 4_2 = 1 THEN 'Poor'
+			    			WHEN 4_2 = 2 THEN 'Fair'
+			    			WHEN 4_2 = 3 THEN 'Good'
+			    			WHEN 4_2 = 4 THEN 'Very Good'
+			    			WHEN 4_2 = 5 THEN 'Excellent'
+			    		END
+			 as d2,
+		        CASE WHEN 4_3 = 1 THEN 'Poor'
+			    			WHEN 4_3 = 2 THEN 'Fair'
+			    			WHEN 4_3 = 3 THEN 'Good'
+			    			WHEN 4_3 = 4 THEN 'Very Good'
+			    			WHEN 4_3 = 5 THEN 'Excellent'
+			    		END
+			 as d3,
+		       4_comments as d_comments,
+		        CASE WHEN 5_1 = 1 THEN 'Poor'
+			    			WHEN 5_1 = 2 THEN 'Fair'
+			    			WHEN 5_1 = 3 THEN 'Good'
+			    			WHEN 5_1 = 4 THEN 'Very Good'
+			    			WHEN 5_1 = 5 THEN 'Excellent'
+			    		END
+			  as e1,
+		        CASE WHEN 5_2 = 1 THEN 'Poor'
+			    			WHEN 5_2 = 2 THEN 'Fair'
+			    			WHEN 5_2 = 3 THEN 'Good'
+			    			WHEN 5_2 = 4 THEN 'Very Good'
+			    			WHEN 5_2 = 5 THEN 'Excellent'
+			    		END
+			  as e2,
+		        CASE WHEN 5_3 = 1 THEN 'Poor'
+			    			WHEN 5_3 = 2 THEN 'Fair'
+			    			WHEN 5_3 = 3 THEN 'Good'
+			    			WHEN 5_3 = 4 THEN 'Very Good'
+			    			WHEN 5_3 = 5 THEN 'Excellent'
+			    		END
+			  as e3,
+		       5_comments as e_comments,
+		       student.name as student_name,
+		       company.name as company_name,
+		       csr.rating,
+		       student.course,
+		       company.address,
+		       soal.login_date,
+		       soal1.logout_date
+
+		FROM user student
+		LEFT JOIN company_student_rating csr ON csr.student_id = student.id
+		LEFT JOIN user company ON company.id = csr.company_id
+		LEFT JOIN (SELECT * FROM  student_ojt_attendance_log WHERE id IN (SELECT id FROM (SELECT MIN(id) as id,student_id,company_id FROM student_ojt_attendance_log GROUP BY 2,3) a ) ) soal ON soal.student_id = student.id AND soal.company_id = company.id
+		LEFT JOIN (SELECT * FROM  student_ojt_attendance_log WHERE id IN (SELECT id FROM (SELECT MAX(id) as id,student_id,company_id FROM student_ojt_attendance_log GROUP BY 2,3) a ) ) soal1 ON soal1.student_id = student.id AND soal1.company_id = company.id
+		WHERE student.accounttype = 1 AND student.id = {$student_id}
+
+    	";
+
+
+
+		error_log($sql);
+
+		$logs = DB::select(DB::raw($sql));
+        error_log(print_r($logs, true));
+        $report = $this->prepareStudentEvaluationReport($logs);
+
+        return json_encode(['data' => $report]);
+    }
+
+    public function prepareStudentEvaluationReport($logs){
+    	error_log(print_r("prepareStudentEvaluationReport", true));
+
+    	$file = "<html>";
+
+     	$file .= "<table colspan=8 border=3>";
+     	$file .= "<tr><td colspan=6> <center><strong> Student Practicum Evaluation </strong></center> </td></tr>";
+
+     	foreach ($logs as $log){
+	     	$file .= "<tr><td colspan=6> Name : <strong> $log->student_name </strong> </td></tr>";
+	     	$file .= "<tr><td colspan=6> Course : <strong> $log->course </strong> </td></tr>";
+
+	     	$file .= "<tr><td colspan=6> Company Name : <strong> $log->company_name </strong> </td></tr>";
+	     	$file .= "<tr><td colspan=6> Address : <strong> $log->address </strong> </td></tr>";
+	     	$file .= "<tr><td colspan=6> Duration : <strong>  ";
+	     	$file .= (null != $log->login_date ? date('m-d-Y',strtotime($log->login_date)) : "");
+	     	$file .= (null != $log->logout_date ? " - ".date('m-d-Y',strtotime($log->logout_date)): "");
+	     	$file .= " </strong> </td></tr>";
+
+	     	$file .= "<tr><td colspan=6> </td></tr>";
+
+			$file .= "<tr><td> <center> <strong> Personal Characteristics </strong>  </center></td><td></td></tr>";
+			$file .= "<tr><td> <strong> Dresses neatly and appropriate for office work </strong> </td><td>";
+			$file .= "$log->a1";
+			$file .= "</td></tr>";
+
+
+			$file .= "<tr><td> <strong> Has a pleasing personality, is cheerful and good humored </strong> </td><td>";
+			$file .= "$log->a2";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td> <strong> Possesses above average oral and written communication skills </strong> </td><td>";
+			$file .= "$log->a3";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td> <strong> Project self-confidence and enthusiasm </strong> </td><td>";
+			$file .= "$log->a4";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td> <strong> Demonstrates leadership potential </strong> </td><td>";
+			$file .= "$log->a5";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td colspan=6> <strong> COMMENTS </strong> </td></tr>";
+
+			$file .= "<tr><td colspan=6> <center>$log->a_comments </center></td></tr>";
+
+			$file .= "<tr><td> <strong><center> Attitude towards the job </center> </strong> </td><td></td></tr>";
+
+			$file .= "<tr><td> <strong> Shows marked interest and pride </strong></td><td>";
+			$file .= "$log->b1";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td><strong> Has an exceptional sense of duty and can always be depended upon to do a good job </strong> </td><td>";
+			$file .= "$log->b2";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td><strong> Cooperates willingly and fits easily to the group </strong> </td><td>";
+			$file .= "$log->b3";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td><strong> Recognizes the authority and responsibilties of his/her superiors and provide them with the necessary support services and assistance required or sought </strong> </td><td>";
+			$file .= "$log->b4";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td><strong> Takes initiative to update one's technical and/or non-technical knowledge and skills </strong> </td><td>";
+			$file .= "$log->b5";
+			$file .= "</td></tr>";
+
+
+			$file .= "<tr><td colspan=6> <strong> COMMENTS </strong> </td></tr>";
+			$file .= "<tr><td colspan=6> <center>$log->b_comments </center></td></tr>";
+
+			$file .= "<tr><td> <strong><center> Job Performance </center> </strong> </td><td></td></tr>";
+
+			$file .= "<tr><td> <strong> Delivers promptly assigned task/responsibilties </strong></td><td>";
+			$file .= "$log->c1";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td> <strong> Performs assigned tasks with minimum supervision </strong></td><td>";
+			$file .= "$log->c2";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td> <strong> Willingly accepts work assignments and/or responsibilties </strong></td><td>";
+			$file .= "$log->c3";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td> <strong> Delivers assigned tasks within acceptable level of quality </strong></td><td>";
+			$file .= "$log->c4";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td> <strong> Performs assigned tasks in an organized and orderly manner </strong></td><td>";
+			$file .= "$log->c5";
+			$file .= "</td></tr>";
+
+
+			$file .= "<tr><td> <strong> Exhibits ability to function well even under pressure </strong></td><td>";
+			$file .= "$log->c6";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td colspan=6> <strong> COMMENTS </strong> </td></tr>";
+			$file .= "<tr><td colspan=6> <center>$log->c_comments </center></td></tr>";
+
+
+			$file .= "<tr><td> <strong><center> Adherence to Company Policies </center> </strong> </td><td></td></tr>";
+
+			$file .= "<tr><td> <strong> Present at work most of the time </strong></td><td>";
+			$file .= "$log->d1";
+			$file .= "</td></tr>";
+
+
+			$file .= "<tr><td> <strong> Comes to work on time </strong></td><td>";
+			$file .= "$log->d2";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td> <strong> Adheres to company and regulations </strong></td><td>";
+			$file .= "$log->d3";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td colspan=6> <strong> COMMENTS </strong> </td></tr>";
+			$file .= "<tr><td colspan=6> <center>$log->d_comments </center></td></tr>";
+
+
+			$file .= "<tr><td> <strong><center> Competence </center> </strong> </td><td></td></tr>";
+
+			$file .= "<tr><td> <strong> Shows mastery of generally accepted principles relevant to the course as applied to different situations </strong></td><td>";
+			$file .= "$log->e1";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td> <strong> Shows adequate knowledge and skill performing assigned tasks. </strong></td><td>";
+			$file .= "$log->e2";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td> <strong> Shows ability to perform routine office procedures. </strong></td><td>";
+			$file .= "$log->e3";
+			$file .= "</td></tr>";
+
+			$file .= "<tr><td colspan=6> <strong> COMMENTS </strong> </td></tr>";
+			$file .= "<tr><td colspan=6> <center>$log->e_comments </center></td></tr>";
+
+			$file .= "<tr><td colspan=6> <strong><center>Grade : $log->rating </center></strong></td></tr>";
+
+	    }
+
+     	$file .= " </table>";
+    	$file .= " </html>";
+
+
+     	return $file;
+    }
+
      public function prepareStudentWeeklyReport($logs){
      	 error_log(print_r("prepareStudentWeeklyReport", true));
 

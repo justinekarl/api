@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::post('ojtmonitoring/report', 'ReportController@generateReport');
 Route::post('ojtmonitoring/reportweekly', 'ReportController@printWeeklyReport');
 Route::post('ojtmonitoring/printStudentWeeklyReport', 'ReportController@printStudentWeekly');
+Route::post('ojtmonitoring/printStudentEvaluation', 'ReportController@printStudentEvaluation');
 Route::get('/ojtmonitoring/signInOff/{id}', 'FingerPrintController@signInOff');
 
 Route::post('/ojtmonitoring/sendMessage', 'ChatMessagesController@sendMessage');
