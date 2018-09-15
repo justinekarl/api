@@ -450,19 +450,19 @@
                             <textarea name="5_comments" id="5_comments" required>{{isset($result) ? $result->{'5_comments'} : '' }}</textarea>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Submit') }}
+                            </button>
+                        </div>
+                    </div>
                 </div>
-
-
 
             </div>
 
-            <div class="form-group row mb-0">
-                <div class="col-md-12 text-right">
-                    <button type="submit" class="btn btn-primary">
-                        {{ __('Submit') }}
-                    </button>
-                </div>
-            </div>
+
 
         </form>
     </div>
