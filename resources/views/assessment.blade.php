@@ -441,7 +441,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row form-group">
                         <div class="col-sm-12">
                             Comments
                         </div>
@@ -451,7 +451,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row form-group">
                         <div class="col-md-12 text-center">
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Submit') }}
