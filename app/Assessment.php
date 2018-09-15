@@ -8,7 +8,7 @@ class Assessment extends Model
 {
     protected $primaryKey = 'id';
     protected $table = 'company_student_rating';
-    protected $dates = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'company_id',
