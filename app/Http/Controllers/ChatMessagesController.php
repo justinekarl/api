@@ -121,4 +121,25 @@ class ChatMessagesController extends Controller
             "updates" => $updates
         ]);
     }
+
+    public function getLatestStudentLog($student_id){
+         $sql = " select DATE_FORMAT(login_date,'%h:%i:%s %p') as login_date,DATE_FORMAT(logout_date,'%h:%i:%s %p') as logout_date,user.name as company_name  from student_ojt_attendance_log
+            LEFT JOIN user ON user.id = student_ojt_attendance_log.company_id AND user.accounttype = 3 where cast(scan_date as date) = current_date AND is_read IS FALSE AND student_id = {$student_id} order by student_ojt_attendance_log.id desc limit 1 ";
+
+         error_log($sql);
+
+         $result = DB::select( DB::raw($sql));
+
+         $updateSQL = "UPDATE student_ojt_attendance_log SET is_read = TRUE WHERE cast(scan_date as date) = current_date AND is_read IS FALSE AND student_id = {$student_id} ";
+
+         $result1 = DB::update(DB::raw($updateSQL));
+
+         error_log($updateSQL);
+         error_log($updateSQL);
+
+         return response()->json([
+            "response" => true,
+            "log" => $result
+        ]);
+    }
 }
