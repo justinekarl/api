@@ -13,18 +13,16 @@ var processDocuments = function(formData){
         success: function(data){
             Ladda.stopAll();
             if(data.response === false){
-                sNotify("error", "Documents", data.message);
+                sNotify("error", "Upload", data.message);
             }else if(data.response === true){
-                sNotify("success", "Documents", data.message,"Ok",function(){
-                    loadDocuments();
-                },[],true);
+                loadDocuments();
             }
         }
     });
 };
 
 var loadDocuments = function(){
-    window.location = currentLocation + mainRoute;
+    window.location = currentLocation + 'ojtmonitoring/upload/ok';
 };
 
 var deleteDocuments = function(formData){

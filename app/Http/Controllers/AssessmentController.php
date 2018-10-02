@@ -121,7 +121,8 @@ class AssessmentController extends Controller
             $fileManager->uploadTo($file, "files/documents", $filePath,$student_id);
         }
         //end for file upload
-        return view('done');
+        $response = ['response' => true, 'message' => 'Resume Uploaded'];
+        return response()->json($response);
     }
 
     public function viewResumes($teacher_id)
@@ -136,8 +137,6 @@ class AssessmentController extends Controller
             $resumes = DB::select(DB::raw($sql));
         }
 
-
-
         return view('teacher',
             [
                 'teacher_id' => $teacher_id,
@@ -145,4 +144,8 @@ class AssessmentController extends Controller
             ]);
     }
 
+    public function uploadSuccess()
+    {
+        return view('uploaded');
+    }
 }
