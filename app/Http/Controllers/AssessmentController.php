@@ -131,6 +131,7 @@ class AssessmentController extends Controller
         $sql = "SELECT id FROM user WHERE accounttype = 1 AND approved IS FALSE AND college like '{$teacher->college}'";
         //$sql = "SELECT id FROM user WHERE college like '{$teacher->college}'";
         $students = DB::select(DB::raw($sql));
+        $resumes = [];
         if(sizeof($students) > 0){
             $ids = implode (", ", array_column($students, 'id'));
             $sql = "select resumes.*,user.name  from resumes left join user on resumes.student_id = user.id where resumes.student_id in ({$ids})";
