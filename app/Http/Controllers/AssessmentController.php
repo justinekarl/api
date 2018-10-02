@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Assessment;
+use App\FileManagerPlugin;
+use App\Resume;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 
 class AssessmentController extends Controller
@@ -81,6 +85,64 @@ class AssessmentController extends Controller
         $aps = (($ave * 50) / 5) + 50;
 
         return $aps;
+    }
+
+    public function uploadResume($student_id)
+    {
+        return view('resume',
+            [
+                'student_id' => $student_id,
+            ]);
+    }
+
+    public function store()
+    {
+        $student_id = request()->input('student_id');
+        //for file upload
+        if (request()->hasFile('filename')) {
+            $file = request()->file('filename');
+            $ext = $file->extension();
+
+            $acceptedType = ["doc","docx","pdf"];
+            if (!in_array($ext, $acceptedType)) {
+                $response = ['response' => false, 'message' => 'Invalid File Type'];
+                return response()->json($response);
+            }
+
+            $resume = new Resume();
+            $date = new \DateTime();
+            $filePath  = $student_id.".{$ext}";
+            $resume->path = $filePath;
+            $resume->student_id = $student_id;
+            //$resume->ext = $ext;
+            $resume->save();
+
+            $fileManager = new FileManagerPlugin();
+            $fileManager->uploadTo($file, "files/documents", $filePath,$student_id);
+        }
+        //end for file upload
+        return view('done');
+    }
+
+    public function viewResumes($teacher_id)
+    {
+        $teacher = User::find($teacher_id);
+        $sql = "SELECT id FROM user WHERE accounttype = 1 AND approved IS FALSE AND college like '{$teacher->college}'";
+        //$sql = "SELECT id FROM user WHERE college like '{$teacher->college}'";
+        $students = DB::select(DB::raw($sql));
+        if(sizeof($students) > 0){
+            $ids = implode (", ", array_column($students, 'id'));
+            $sql = "select resumes.*,user.name  from resumes left join user on resumes.student_id = user.id where resumes.student_id in ({$ids})";
+            $resumes = DB::select(DB::raw($sql));
+        }
+
+
+
+        return view('teacher',
+            [
+                'teacher_id' => $teacher_id,
+                'documents' => $resumes
+            ]);
     }
 
 }
