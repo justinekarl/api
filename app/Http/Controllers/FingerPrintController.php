@@ -26,6 +26,7 @@ class FingerPrintController extends Controller
             $login = "INSERT INTO student_ojt_attendance_log(student_id,company_id,login_date,login,finger_print_scanner)";
             $login .= "VALUES ({$id},{$company_id},now(),true,true)";
         }
+	error_log("finder print : ".$id);
         $result = DB::select(DB::raw($login));
         return response()->json(
             [

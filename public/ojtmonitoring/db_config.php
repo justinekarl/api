@@ -18,7 +18,7 @@ $port="3306"; */
 
 $host="localhost";
 $username="root";
-$password="1234";
+$password="root";
 $db_name="ojtmonitoring";
 $port="5432";
 
