@@ -43,7 +43,7 @@ if (isset($_POST['agentid'])) {
 	    }
         
             $response["success"] = 1;
-            error_log(json_encode($response));
+            error_log("Response ".print_r(json_encode($response),true));
             echo json_encode($response);
 
 }
