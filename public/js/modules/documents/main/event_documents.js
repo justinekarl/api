@@ -13,19 +13,3 @@ bodyTag.on("click", ".documents-delete", function(event){
         true);
 });
 
-
-
-$('.level').on('ifChecked', function(event) {
-    if(event.target.value == 2){
-        $('#districts_options').show();
-        $('#churches_options').hide();
-        $('.select2').select2();
-    }else if(event.target.value == 3){
-        $('#churches_options').show();
-        $('#districts_options').hide();
-        $('.select2').select2();
-    }else{
-        $('#districts_options').hide();
-        $('#churches_options').hide();
-    }
-});

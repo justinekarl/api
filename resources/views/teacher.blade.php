@@ -18,7 +18,7 @@
 
     <script src="{{$templatePlugin->rootLocation()}}/js/modules/documents/main/documents.js"></script>
     <script src="{{$templatePlugin->rootLocation()}}/js/modules/documents/main/event_documents.js"></script>
-    <script src="{{$templatePlugin->rootLocation()}}/js/modules/documents/data_table/documents_data_table.js"></script>
+    
 @endsection
 
 @section('content')
@@ -45,7 +45,7 @@
 
                             <div class="content">
                                 <div class="panel-body">
-                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table-documents">
+                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" >
                                         <thead>
                                         <tr>
                                             <th class="text-center" > Student </th>
