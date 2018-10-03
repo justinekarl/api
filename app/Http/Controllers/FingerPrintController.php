@@ -19,7 +19,7 @@ class FingerPrintController extends Controller
         $login = $checker[0]->checker;
 
         if($login){
-            $login = " UPDATE student_ojt_attendance_log SET logout_date = now(), login = false";
+            $login = " UPDATE student_ojt_attendance_log SET logout_date = now(), login = false,is_read = false";
             $login .= " WHERE student_id = {$id} AND company_id = {$company_id} ";
             $login .= " AND logout_date IS NULL and login_date IS NOT NULL ";
         }else{
