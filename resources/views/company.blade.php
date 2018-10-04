@@ -54,27 +54,38 @@
                                         </thead>
 
                                         <tbody>
-                                        @foreach($documents as $document)
-                                            <tr>
-                                                <td>
-                                                    {{$document->name}}
-                                                </td>
-                                                <td class="text-center">
+                                        @foreach($students as $student)
+                                            
+                                                <tr>
+                                                    <td>
+                                                        <div class="row text-center">
+                                                            Student Name : {{$student->student_name}}
+                                                        </div>
 
+                                                        <div class="row text-center">
+                                                            College : {{$student->college}}
+                                                        </div>
 
-                                                    <div class="btn-group">
+                                                        <div class="row text-center">
+                                                            Course : {{$student->course}}
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="btn-group">
+                                                            <a href="#" class="btn btn-primary btn-sm company-user-approve" data-student_id = "{{$student->student_id}}" data-teacher_id = "{{$company_id}}">
+                                                                <i class="glyphicon glyphicon-ok"></i>
+                                                            </a>
 
-                                                        <a href="#" class="btn btn-primary btn-sm user-approve" data-id = "{{$document->student_id}}">
-                                                            <i class="fa fa-check"></i>
-                                                        </a>
+                                                            <a href="#" class="btn btn-danger btn-sm company-user-decline" data-student_id = "{{$student->student_id}}" data-teacher_id = "{{$company_id}}">
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            </a>
+                                                            <a href="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :
+                                                            $templatePlugin->rootLocation()."/css/images/default_image.png"}}" class="btn btn-success btn-sm documents-download" download="{{$student->path}}"><i class="fa fa-download"></i></a>
 
+                                                        </div>
+                                                    </td>
+                                                </tr>
 
-                                                        <a href="{{(isset($document) && $document != null && "" != $document->path) ? $fileManager->getFileUrl("files/documents", $document->path,$document->student_id) :
-                                                            $templatePlugin->rootLocation()."/css/images/default_image.png"}}" class="btn btn-success btn-sm documents-download" download="{{$document->path}}"><i class="fa fa-download"></i></a>
-
-                                                    </div>
-                                                </td>
-                                            </tr>
                                         @endforeach
                                         </tbody>
                                     </table>

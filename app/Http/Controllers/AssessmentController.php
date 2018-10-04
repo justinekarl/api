@@ -214,26 +214,36 @@ class AssessmentController extends Controller
     {
         $company = User::find($company_id);
 
-        $sql = "SELECT user.id 
-                    FROM user 
-                    inner join resume_details on user.id = resume_details.user_id 
-                    WHERE resume_details.approved = 0 
-                    and user.accounttype = 1 
-                    AND user.approved IS FALSE 
-                    AND user.college like '{$company->college}'";
+        $sql = "SELECT COALESCE(b.name,'') as student_name,
+                COALESCE(b.college,'') as college,
+                rd.id as student_id,
+                accepted,
+                COALESCE(b.course,'') as course ,
+                resumes.student_id,
+                resumes.path
+					
+					FROM company_ojt a
+					LEFT JOIN resume_details rd ON rd.id = a.user_id 
+					LEFT JOIN user b ON rd.user_id = b.id
+					LEFT JOIN resumes ON b.id = resumes.student_id
+					WHERE a.company_id= ".$company_id."
+					AND accounttype = 1
+					AND rd.approved
+					AND a.user_id NOT IN (select user_id from company_ojt where company_id != ".$company_id." and accepted)
+					ORDER BY 1,2,3,4";
         //$sql = "SELECT id FROM user WHERE college like '{$teacher->college}'";
         $students = DB::select(DB::raw($sql));
-        $resumes = [];
+        /*$resumes = [];
         if(sizeof($students) > 0){
             $ids = implode (", ", array_column($students, 'id'));
             $sql = "select resumes.*,user.name  from resumes left join user on resumes.student_id = user.id where resumes.student_id in ({$ids})";
             $resumes = DB::select(DB::raw($sql));
-        }
+        }*/
 
         return view('company',
             [
                 'company_id' => $company_id,
-                'documents' => $resumes
+                'students' => $students
             ]);
     }
 

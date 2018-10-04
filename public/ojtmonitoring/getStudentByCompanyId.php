@@ -7,7 +7,7 @@ $response = array();
 error_log("get students by company list");
 if (isset($_POST['agentid'])) {
     $agent_id = $_POST['agentid'];
-    
+
     $queryOjt = " SELECT CONCAT('student_name~',COALESCE(b.name,'')),CONCAT('college~',COALESCE(b.college,'')),CONCAT('student_id~',rd.id),CONCAT('accepted~',accepted),CONCAT('course~',COALESCE(b.course,''))
 					FROM company_ojt a
 					LEFT JOIN resume_details rd ON rd.id = a.user_id 
