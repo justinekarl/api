@@ -154,5 +154,11 @@ class AssessmentController extends Controller
         return view('uploaded');
     }
 
+    public function approve(Request $request)
+    {
+        $id = $request->input("id");
+        $response = ['response' => true, 'message' => 'Successful'];
+        return response()->json($response);
+    }
 
 }

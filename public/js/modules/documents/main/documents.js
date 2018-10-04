@@ -44,6 +44,23 @@ var deleteDocuments = function(formData){
     });
 };
 
+var approveStudent = function(formData){
+    $.ajax({
+        type: 'POST',
+        data: formData,
+        url: currentLocation + 'ojtmonitoring/approve',
+        'dataType': 'json',
+        success: function(data){
+            Ladda.stopAll();
+            if(data.response === false){
+                sNotify("error", "Approve", data.message);
+            }else if(data.response === true){
+                location.reload();
+            }
+        }
+    });
+};
+
 
 $(function (){
     Ladda.bind(".btn-ladda-progress", {

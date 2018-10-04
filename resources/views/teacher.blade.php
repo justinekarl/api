@@ -60,7 +60,15 @@
                                                     {{$document->name}}
                                                 </td>
                                                 <td class="text-center">
+
+
                                                     <div class="btn-group">
+
+                                                        <a href="#" class="btn btn-primary btn-sm user-approve" data-id = "{{$document->student_id}}">
+                                                            <i class="fa fa-check"></i>
+                                                        </a>
+
+
                                                         <a href="{{(isset($document) && $document != null && "" != $document->path) ? $fileManager->getFileUrl("files/documents", $document->path,$document->student_id) :
                                                             $templatePlugin->rootLocation()."/css/images/default_image.png"}}" class="btn btn-success btn-sm documents-download" download="{{$document->path}}"><i class="fa fa-download"></i></a>
 
