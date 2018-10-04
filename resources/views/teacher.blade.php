@@ -64,8 +64,12 @@
 
                                                     <div class="btn-group">
 
-                                                        <a href="#" class="btn btn-primary btn-sm user-approve" data-id = "{{$document->student_id}}">
-                                                            <i class="fa fa-check"></i>
+                                                        <a href="#" class="btn btn-primary btn-sm user-approve" data-student_id = "{{$document->student_id}}" data-teacher_id = "{{$teacher_id}}">
+                                                            <i class="glyphicon glyphicon-ok"></i>
+                                                        </a>
+
+                                                        <a href="#" class="btn btn-danger btn-sm user-decline" data-student_id = "{{$document->student_id}}" data-teacher_id = "{{$teacher_id}}">
+                                                            <i class="glyphicon glyphicon-remove"></i>
                                                         </a>
 
 
