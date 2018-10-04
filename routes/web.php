@@ -47,9 +47,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/ojtmonitoring/resume/{student_id}', 'AssessmentController@uploadResume');
 Route::post('/ojtmonitoring/upload', 'AssessmentController@store');
 Route::get('/ojtmonitoring/resume/teacher/{teacher_id}', 'AssessmentController@viewResumes');
+
 Route::get('/ojtmonitoring/upload/ok', 'AssessmentController@uploadSuccess');
 
 Route::post('/ojtmonitoring/approve', 'AssessmentController@approve');
+
+Route::post('/ojtmonitoring/approveStudent', 'AssessmentController@approveStudents');
 
 Route::get('/ojtmonitoring/resume/company/{company_id}', 'AssessmentController@viewCompany');
 

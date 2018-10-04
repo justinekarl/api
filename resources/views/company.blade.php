@@ -72,11 +72,11 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="btn-group">
-                                                            <a href="#" class="btn btn-primary btn-sm company-user-approve" data-student_id = "{{$student->student_id}}" data-teacher_id = "{{$company_id}}">
+                                                            <a href="#" class="btn btn-primary btn-sm company-user-approve" data-student_id = "{{$student->student_id}}" data-company_id = "{{$company_id}}">
                                                                 <i class="glyphicon glyphicon-ok"></i>
                                                             </a>
 
-                                                            <a href="#" class="btn btn-danger btn-sm company-user-decline" data-student_id = "{{$student->student_id}}" data-teacher_id = "{{$company_id}}">
+                                                            <a href="#" class="btn btn-danger btn-sm company-user-decline" data-student_id = "{{$student->student_id}}" data-company_id = "{{$company_id}}">
                                                                 <i class="glyphicon glyphicon-remove"></i>
                                                             </a>
                                                             <a href="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :

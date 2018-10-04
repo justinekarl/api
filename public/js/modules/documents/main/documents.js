@@ -65,6 +65,27 @@ var approveStudent = function(formData){
     });
 };
 
+var approveStudentFromCompany = function(formData){
+    $.ajax({
+        type: 'POST',
+        data: formData,
+        url: currentLocation + 'ojtmonitoring/approveStudent',
+        'dataType': 'json',
+        success: function(data){
+            Ladda.stopAll();
+            if(data.response === false){
+                sNotify("error", "Approve", data.message);
+            }else if(data.response === true){
+                sNotify("success", "Successful", data.message,"Ok",function(){
+                    location.reload();
+                },[],true);
+
+
+            }
+        }
+    });
+};
+
 
 $(function (){
     Ladda.bind(".btn-ladda-progress", {

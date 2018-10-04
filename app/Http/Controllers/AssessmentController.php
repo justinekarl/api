@@ -168,10 +168,15 @@ class AssessmentController extends Controller
                     LEFT JOIN user d ON d.id = b.user_id
                     LEFT JOIN user e ON e.id = c.user_id
                     LEFT JOIN company_ojt co ON co.user_id = c.user_id
-                    LEFT JOIN resumes ON a.user_id = resumes.student_id
+                    LEFT JOIN resumes ON c.user_id = resumes.student_id
                     WHERE 1=1";
+       //$sql .= " AND TRIM(e.college) = (SELECT college FROM user WHERE id = ".$teacher_id." AND accounttype = 2) " ;
+
+        error_log($sql);
 
         $students = DB::select(DB::raw($sql));
+
+        error_log(sizeof($students));
         /*$resumes = [];
         if(sizeof($students) > 0){
             $ids = implode (", ", array_column($students, 'id'));
@@ -186,6 +191,38 @@ class AssessmentController extends Controller
             ]);
     }
 
+
+    /*public function viewResumesFromCompany($company_id){
+        $company = User::find($company_id);
+
+        $sql = "SELECT COALESCE(b.name,''),
+                       COALESCE(b.college,''),
+                       rd.id,
+                       accepted,
+                       COALESCE(b.course,'')
+                    FROM company_ojt a
+                    LEFT JOIN resume_details rd ON rd.id = a.user_id 
+                    LEFT JOIN user b ON rd.user_id = b.id
+
+                    WHERE a.company_id= "$company_id"
+                    AND accounttype = 1
+                    AND rd.approved
+                    AND a.user_id NOT IN (select user_id from company_ojt where company_id != "$company_id" and accepted)
+                    ORDER BY 1,2,3,4"
+
+        error_log($sql);
+
+        $students = DB::select(DB::raw($sql));
+
+        return view('company',
+            [
+                'company' => $company,
+                'students' => $students
+            ]);
+
+
+    }*/
+
     public function uploadSuccess()
     {
         return view('uploaded');
@@ -195,6 +232,7 @@ class AssessmentController extends Controller
     {
         $student_id = $request->input("student_id");
         $teacher_id = $request->input("teacher_id");
+        $company_id = $request->input("company_id");
         $status = $request->input("status");
 
         $resume_details = ResumeDetails::where('user_id', '=',$student_id)->first();
@@ -204,10 +242,60 @@ class AssessmentController extends Controller
 
         $response = ['response' => false, 'message' => 'Error Encountered'];
         if($result){
+
+            if($status){
+
+                $sql = "INSERT INTO company_ojt(user_id,company_id,approved_by_teacher_id)";
+                $sql .=" SELECT  ";
+                $sql .= $resume_details->id;
+                $sql .= ",".$company_id;
+                $sql .= ",".$teacher_id;
+                error_log($sql);
+                DB::insert(DB::raw($sql));
+            }else{
+                $sql = "DELETE FROM company_ojt WHERE user_id = ".$resume_details->id." AND company_id = ".$company_id." ";
+                DB::delete(DB::raw($sql));
+                error_log($sql);
+            }
+
+
+            error_log($sql);
+
+            
+
             $response = ['response' => true, 'message' => 'Successful'];
         }
 
         return response()->json($response);
+    }
+
+    public function approveStudents(Request $request){
+        $student_id = $request->input("student_id");
+        $company_id = $request->input("company_id");
+        $status = $request->input("status");
+
+        $sql = "UPDATE company_ojt SET accepted_date = current_date , accepted = ".$status." , accepted_by_company_id = ".$company_id." WHERE user_id = (SELECT id FROM resume_details WHERE user_id = ".$student_id.") AND  company_id = ".$company_id." ";
+
+         error_log($sql);
+
+         $result = DB::update(DB::raw($sql));
+         $response = ['response' => false, 'message' => 'Error Encountered'];
+         if($result) {
+            $response = ['response' => true, 'message' => 'Successful'];
+
+            $sql  = "INSERT INTO student_notif(user_id,message) VALUES ";
+            $sql .=" (";
+            $sql .= "(SELECT id FROM resume_details WHERE user_id = ".$student_id.")";
+            $sql .= ", concat('You were accepted as an OJT for Company :', (SELECT name FROM user WHERE id = ".$company_id." AND accounttype = 3)) ";
+            $sql .= ")";
+            error_log($sql);
+
+            DB::insert(DB::raw($sql));
+
+         }
+         //'$studId','You were accepted as an OJT for Company : ".$companyName."
+
+         return response()->json($response);
     }
 
     public function viewCompany($company_id)

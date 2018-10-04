@@ -35,7 +35,7 @@ if (isset($_POST['college'])) {
         $sectionQuery = $sectionQuery. " AND accounttype = $accounttype ";
         $sectionQuery = $sectionQuery. " AND company_id IN (SELECT company_id FROM company_course_to_accept WHERE course_id IN (SELECT id FROM course_look_up WHERE college = '".$college."')) ";
 
-        $sectionQuery = $sectionQuery. " AND approved ";
+        $sectionQuery = $sectionQuery. " ";
 
     }
 

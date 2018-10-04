@@ -13,11 +13,11 @@
     <script src="{{$templatePlugin->rootLocation()}}/js/ladda/spin.min.js"></script>
     <script src="{{$templatePlugin->rootLocation()}}/js/ladda/ladda.min.js"></script>
     <script src="{{$templatePlugin->rootLocation()}}/js/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="{{$templatePlugin->rootLocation()}}/js/notify/snotify.js"></script>
+    <script src="{{$templatePlugin->rootLocation()}}js/notify/snotify.js"></script>
 
 
-    <script src="{{$templatePlugin->rootLocation()}}/js/modules/documents/main/documents.js"></script>
-    <script src="{{$templatePlugin->rootLocation()}}/js/modules/documents/main/event_documents.js"></script>
+    <script src="{{$templatePlugin->rootLocation()}}js/modules/documents/main/documents.js"></script>
+    <script src="{{$templatePlugin->rootLocation()}}js/modules/documents/main/event_documents.js"></script>
 
 @endsection
 
@@ -54,12 +54,13 @@
                                         </thead>
 
                                         <tbody>
-                                        @foreach($students as $student)
+                                         @foreach($students as $student)
                                             @if($teacher->college == $student->college && $student->path != null && $student->approved == 0)
                                             <tr>
                                                 <td>
                                                     <div class="row text-center">
-                                                        Company Name : {{$student->company_name}}
+                                                        Company Name : {{$student->company_name}} 
+
                                                     </div>
 
                                                     <div class="row text-center">
@@ -79,12 +80,12 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <a href="#" class="btn btn-primary btn-sm user-approve" data-student_id = "{{$student->student_id}}" data-teacher_id = "{{$teacher->id}}">
+                                                    <div class="btn-group"> 
+                                                        <a href="#" class="btn btn-primary btn-sm user-approve" data-student_id = "{{$student->student_id}}" data-teacher_id = "{{$teacher->id}}" data-company_id = "{{$student->company_id}}">
                                                             <i class="glyphicon glyphicon-ok"></i>
                                                         </a>
 
-                                                        <a href="#" class="btn btn-danger btn-sm user-decline" data-student_id = "{{$student->student_id}}" data-teacher_id = "{{$teacher->id}}">
+                                                        <a href="#" class="btn btn-danger btn-sm user-decline" data-student_id = "{{$student->student_id}}" data-teacher_id = "{{$teacher->id}}" data-company_id = "{{$student->company_id}}">
                                                             <i class="glyphicon glyphicon-remove"></i>
                                                         </a>
                                                         <a href="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :

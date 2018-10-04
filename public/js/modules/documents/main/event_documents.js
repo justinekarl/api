@@ -3,10 +3,12 @@ var bodyTag = $("body");
 bodyTag.on("click", ".user-approve", function(event){
     var student_id = $(this).data("student_id");
     var teacher_id = $(this).data("teacher_id");
+    var company_id = $(this).data("company_id");
     var status = 1;
     var formData = {};
     formData.student_id = student_id;
     formData.teacher_id = teacher_id;
+    formData.company_id = company_id;
     formData.status = status;
 
     sNotify("warning",
@@ -22,10 +24,12 @@ bodyTag.on("click", ".user-approve", function(event){
 bodyTag.on("click", ".user-decline", function(event){
     var student_id = $(this).data("student_id");
     var teacher_id = $(this).data("teacher_id");
+    var company_id = $(this).data("company_id");
     var status = 0;
     var formData = {};
     formData.student_id = student_id;
     formData.teacher_id = teacher_id;
+    formData.company_id = company_id;
     formData.status = status;
     sNotify("warning",
         "Decline Student",
@@ -39,34 +43,38 @@ bodyTag.on("click", ".user-decline", function(event){
 
 bodyTag.on("click", ".company-user-approve", function(event){
     var student_id = $(this).data("student_id");
-    var teacher_id = $(this).data("teacher_id");
+    //var teacher_id = $(this).data("teacher_id");
+    var company_id = $(this).data("company_id");
     var status = 1;
     var formData = {};
     formData.student_id = student_id;
-    formData.teacher_id = teacher_id;
+    //formData.teacher_id = teacher_id;
+    formData.company_id = company_id;
     formData.status = status;
     sNotify("warning",
-        "Decline Student",
-        "Are you sure you want to decline this student?",
+        "Approve Student OJT",
+        "Are you sure you want to accept this student?",
         "Yes!",
-        approveStudent,
+        approveStudentFromCompany,
         formData,
         true);
 });
 
 bodyTag.on("click", ".company-user-decline", function(event){
     var student_id = $(this).data("student_id");
-    var teacher_id = $(this).data("teacher_id");
+    //var teacher_id = $(this).data("teacher_id");
+    var company_id = $(this).data("company_id");
     var status = 1;
     var formData = {};
     formData.student_id = student_id;
-    formData.teacher_id = teacher_id;
+    //formData.teacher_id = teacher_id;
+    formData.company_id = company_id;
     formData.status = status;
     sNotify("warning",
-        "Decline Student",
+        "Decline Student OJT",
         "Are you sure you want to decline this student?",
         "Yes!",
-        approveStudent,
+        approveStudentFromCompany,
         formData,
         true);
 });
