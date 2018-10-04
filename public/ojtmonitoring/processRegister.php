@@ -110,7 +110,7 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
         if($accounttype == 3){
 
 
-            $companyQry = "INSERT INTO user(username,password,name,address,department,phonenumber,accounttype,approved) VALUES('$user_name', '$password','$full_name','$address','$companyType','$phonenumber','$accounttype',true)";
+            $companyQry = "INSERT INTO user(username,password,name,address,department,phonenumber,accounttype,approved) VALUES('$user_name', '$password','$full_name','$address','$companyType','$phonenumber','$accounttype',false)";
             $result=mysqli_query($link,$companyQry
             );
             $id = mysqli_insert_id($link);
