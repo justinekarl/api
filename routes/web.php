@@ -51,4 +51,6 @@ Route::get('/ojtmonitoring/upload/ok', 'AssessmentController@uploadSuccess');
 
 Route::post('/ojtmonitoring/approve', 'AssessmentController@approve');
 
+Route::get('/ojtmonitoring/resume/company/{company_id}', 'AssessmentController@viewCompany');
+
 

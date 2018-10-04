@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Assessment;
 use App\FileManagerPlugin;
 use App\Resume;
+use App\ResumeDetails;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -100,6 +101,7 @@ class AssessmentController extends Controller
         $student_id = request()->input('student_id');
 
         $resume = Resume::where('student_id', '=',$student_id)->first();
+        $resume_details = ResumeDetails::where('user_id', '=',$student_id)->first();
 
         //for file upload
         if (request()->hasFile('filename')) {
@@ -123,6 +125,14 @@ class AssessmentController extends Controller
 
             $fileManager = new FileManagerPlugin();
             $fileManager->uploadTo($file, "files/documents", $filePath,$student_id);
+
+            if(!$resume_details){
+                $resume_details = new ResumeDetails();
+                $resume_details->user_id = $student_id;
+                $resume_details->save();
+            }
+
+
         }
         //end for file upload
         $response = ['response' => true, 'message' => 'Resume Uploaded'];
@@ -132,20 +142,47 @@ class AssessmentController extends Controller
     public function viewResumes($teacher_id)
     {
         $teacher = User::find($teacher_id);
-        $sql = "SELECT id FROM user WHERE accounttype = 1 AND approved IS FALSE AND college like '{$teacher->college}'";
-        //$sql = "SELECT id FROM user WHERE college like '{$teacher->college}'";
+       /* $sql = "SELECT user.id
+                    FROM user
+                    inner join resume_details on user.id = resume_details.user_id
+                    WHERE resume_details.approved = 0
+                    and user.accounttype = 1
+                    AND user.approved IS FALSE
+                    AND user.college like '{$teacher->college}'";*/
+
+       $sql = "SELECT 
+                    distinct b.user_id as company_id,
+                    COALESCE(d.name,'') as company_name,
+                    COALESCE(e.college,'') as college,
+                    CONCAT('resume_id~',c.id),
+                    COALESCE(e.name,'') as student_name,
+                    COALESCE(e.phonenumber,'') as phonenumber,
+                    COALESCE(e.email,'') as email,
+                    c.approved as approved, 
+                    CONCAT('selected_company_id~',coalesce(co.accepted_by_company_id,0)),
+                    resumes.student_id,
+                    resumes.path
+                    FROM student_company_selected a
+                    LEFT JOIN company_profile b ON a.company_id = b.id
+                    LEFT JOIN resume_details c ON a.user_id = c.user_id
+                    LEFT JOIN user d ON d.id = b.user_id
+                    LEFT JOIN user e ON e.id = c.user_id
+                    LEFT JOIN company_ojt co ON co.user_id = c.user_id
+                    LEFT JOIN resumes ON a.user_id = resumes.student_id
+                    WHERE 1=1";
+
         $students = DB::select(DB::raw($sql));
-        $resumes = [];
+        /*$resumes = [];
         if(sizeof($students) > 0){
             $ids = implode (", ", array_column($students, 'id'));
             $sql = "select resumes.*,user.name  from resumes left join user on resumes.student_id = user.id where resumes.student_id in ({$ids})";
             $resumes = DB::select(DB::raw($sql));
-        }
+        }*/
 
         return view('teacher',
             [
-                'teacher_id' => $teacher_id,
-                'documents' => $resumes
+                'teacher' => $teacher,
+                'students' => $students
             ]);
     }
 
@@ -156,15 +193,34 @@ class AssessmentController extends Controller
 
     public function approve(Request $request)
     {
-        $id = $request->input("id");
-        $response = ['response' => true, 'message' => 'Successful'];
+        $student_id = $request->input("student_id");
+        $teacher_id = $request->input("teacher_id");
+        $status = $request->input("status");
+
+        $resume_details = ResumeDetails::where('user_id', '=',$student_id)->first();
+        $resume_details->approved = $status;
+        $resume_details->updated_by_teacher_id = $teacher_id;
+        $result = $resume_details->save();
+
+        $response = ['response' => false, 'message' => 'Error Encountered'];
+        if($result){
+            $response = ['response' => true, 'message' => 'Successful'];
+        }
+
         return response()->json($response);
     }
 
     public function viewCompany($company_id)
     {
-        $teacher = User::find($company_id);
-        $sql = "SELECT id FROM user WHERE accounttype = 1 AND approved IS FALSE AND college like '{$teacher->college}'";
+        $company = User::find($company_id);
+
+        $sql = "SELECT user.id 
+                    FROM user 
+                    inner join resume_details on user.id = resume_details.user_id 
+                    WHERE resume_details.approved = 0 
+                    and user.accounttype = 1 
+                    AND user.approved IS FALSE 
+                    AND user.college like '{$company->college}'";
         //$sql = "SELECT id FROM user WHERE college like '{$teacher->college}'";
         $students = DB::select(DB::raw($sql));
         $resumes = [];
@@ -174,7 +230,7 @@ class AssessmentController extends Controller
             $resumes = DB::select(DB::raw($sql));
         }
 
-        return view('teacher',
+        return view('company',
             [
                 'company_id' => $company_id,
                 'documents' => $resumes

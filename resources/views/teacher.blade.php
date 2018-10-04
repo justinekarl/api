@@ -54,31 +54,46 @@
                                         </thead>
 
                                         <tbody>
-                                        @foreach($documents as $document)
+                                        @foreach($students as $student)
+                                            @if($teacher->college == $student->college)
                                             <tr>
                                                 <td>
-                                                    {{$document->name}}
+                                                    <div class="row text-center">
+                                                        Company Name : {{$student->company_name}}
+                                                    </div>
+
+                                                    <div class="row text-center">
+                                                        College : {{$student->college}}
+                                                    </div>
+
+                                                    <div class="row text-center">
+                                                        Student Name : {{$student->student_name}}
+                                                    </div>
+
+                                                    <div class="row text-center">
+                                                        Phone Number : {{$student->phonenumber}}
+                                                    </div>
+
+                                                    <div class="row text-center">
+                                                        Email : {{$student->email}}
+                                                    </div>
                                                 </td>
                                                 <td class="text-center">
-
-
                                                     <div class="btn-group">
-
-                                                        <a href="#" class="btn btn-primary btn-sm user-approve" data-student_id = "{{$document->student_id}}" data-teacher_id = "{{$teacher_id}}">
+                                                        <a href="#" class="btn btn-primary btn-sm user-approve" data-student_id = "{{$student->student_id}}" data-teacher_id = "{{$teacher->id}}">
                                                             <i class="glyphicon glyphicon-ok"></i>
                                                         </a>
 
-                                                        <a href="#" class="btn btn-danger btn-sm user-decline" data-student_id = "{{$document->student_id}}" data-teacher_id = "{{$teacher_id}}">
+                                                        <a href="#" class="btn btn-danger btn-sm user-decline" data-student_id = "{{$student->student_id}}" data-teacher_id = "{{$teacher->id}}">
                                                             <i class="glyphicon glyphicon-remove"></i>
                                                         </a>
-
-
-                                                        <a href="{{(isset($document) && $document != null && "" != $document->path) ? $fileManager->getFileUrl("files/documents", $document->path,$document->student_id) :
-                                                            $templatePlugin->rootLocation()."/css/images/default_image.png"}}" class="btn btn-success btn-sm documents-download" download="{{$document->path}}"><i class="fa fa-download"></i></a>
+                                                        <a href="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :
+                                                            $templatePlugin->rootLocation()."/css/images/default_image.png"}}" class="btn btn-success btn-sm documents-download" download="{{$student->path}}"><i class="fa fa-download"></i></a>
 
                                                     </div>
                                                 </td>
                                             </tr>
+                                            @endif
                                         @endforeach
                                         </tbody>
                                     </table>

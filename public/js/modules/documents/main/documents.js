@@ -55,7 +55,11 @@ var approveStudent = function(formData){
             if(data.response === false){
                 sNotify("error", "Approve", data.message);
             }else if(data.response === true){
-                location.reload();
+                sNotify("success", "Successful", data.message,"Ok",function(){
+                    location.reload();
+                },[],true);
+
+
             }
         }
     });
