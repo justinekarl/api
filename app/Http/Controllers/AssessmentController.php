@@ -98,6 +98,9 @@ class AssessmentController extends Controller
     public function store()
     {
         $student_id = request()->input('student_id');
+
+        $resume = Resume::where('student_id', '=',$student_id)->first();
+
         //for file upload
         if (request()->hasFile('filename')) {
             $file = request()->file('filename');
@@ -108,8 +111,9 @@ class AssessmentController extends Controller
                 $response = ['response' => false, 'message' => 'Invalid File Type'];
                 return response()->json($response);
             }
-
-            $resume = new Resume();
+            if(!$resume){
+                $resume = new Resume();
+            }
             $date = new \DateTime();
             $filePath  = $student_id.".{$ext}";
             $resume->path = $filePath;
@@ -149,4 +153,6 @@ class AssessmentController extends Controller
     {
         return view('uploaded');
     }
+
+
 }

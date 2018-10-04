@@ -18,7 +18,7 @@
 
     <script src="{{$templatePlugin->rootLocation()}}/js/modules/documents/main/documents.js"></script>
     <script src="{{$templatePlugin->rootLocation()}}/js/modules/documents/main/event_documents.js"></script>
-    
+
 @endsection
 
 @section('content')
