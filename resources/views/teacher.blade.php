@@ -55,7 +55,7 @@
 
                                         <tbody>
                                         @foreach($students as $student)
-                                            @if($teacher->college == $student->college)
+                                            @if($teacher->college == $student->college && $student->path != null && $student->approved == 0)
                                             <tr>
                                                 <td>
                                                     <div class="row text-center">
