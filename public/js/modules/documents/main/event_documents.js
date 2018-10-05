@@ -82,6 +82,8 @@ bodyTag.on("click", ".company-user-decline", function(event){
 
 bodyTag.on("click", ".documents-download", function(event){
     var download_location = $(this).data("download_location");
-    location.href = download_location;
+    window.open(download_location);
+
+    //window.location = download_location;
 });
 
