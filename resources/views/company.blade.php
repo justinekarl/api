@@ -55,7 +55,7 @@
 
                                         <tbody>
                                         @foreach($students as $student)
-                                            
+
                                                 <tr>
                                                     <td>
                                                         <div class="row text-center">
@@ -79,8 +79,14 @@
                                                             <a href="#" class="btn btn-danger btn-sm company-user-decline" data-student_id = "{{$student->student_id}}" data-company_id = "{{$company_id}}">
                                                                 <i class="glyphicon glyphicon-remove"></i>
                                                             </a>
-                                                            <a href="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :
-                                                            $templatePlugin->rootLocation()."/css/images/default_image.png"}}" class="btn btn-success btn-sm documents-download" download="{{$student->path}}"><i class="fa fa-download"></i></a>
+                                                            {{--<a href="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :
+                                                            $templatePlugin->rootLocation()."/css/images/default_image.png"}}" class="btn btn-success btn-sm documents-download" download="{{$student->path}}"><i class="fa fa-download"></i></a>--}}
+
+                                                            <a href="#" class="btn btn-success btn-sm documents-download" data-download_location="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :
+                                                            $templatePlugin->rootLocation()."/css/images/default_image.png"}}"><i class="fa fa-download"></i></a>
+
+
+                                                            <iframe class="doc" src="{{'https://docs.google.com/gview?url=http://18.191.44.167/storage/files/documents/'.$student->student_id.'/'.$student->path.'&embedded=true'}}"></iframe>
 
                                                         </div>
                                                     </td>
