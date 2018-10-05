@@ -79,3 +79,9 @@ bodyTag.on("click", ".company-user-decline", function(event){
         true);
 });
 
+
+bodyTag.on("click", ".documents-download", function(event){
+    var download_location = $(this).data("download_location");
+    location.href = download_location;
+});
+
