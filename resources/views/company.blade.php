@@ -4,6 +4,12 @@
     <link rel="stylesheet" href="{{$templatePlugin->rootLocation()}}/provider/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="{{$templatePlugin->rootLocation()}}/css/ladda/ladda-themeless.min.css">
     <link rel="stylesheet" href="{{$templatePlugin->rootLocation()}}/js/sweetalert2/dist/sweetalert2.min.css">
+    <style>
+        .doc {
+            width: 100%;
+            height: 100px;
+        }
+    </style>
 @endsection
 
 @section('javascript')
@@ -55,7 +61,7 @@
 
                                         <tbody>
                                         @foreach($students as $student)
-                                            
+
                                                 <tr>
                                                     <td>
                                                         <div class="row text-center">
@@ -79,10 +85,13 @@
                                                             <a href="#" class="btn btn-danger btn-sm company-user-decline" data-student_id = "{{$student->student_id}}" data-company_id = "{{$company_id}}">
                                                                 <i class="glyphicon glyphicon-remove"></i>
                                                             </a>
-                                                            <a href="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :
-                                                            $templatePlugin->rootLocation()."/css/images/default_image.png"}}" class="btn btn-success btn-sm documents-download" download="{{$student->path}}"><i class="fa fa-download"></i></a>
+                                                            {{--<a href="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :
+                                                            $templatePlugin->rootLocation()."/css/images/default_image.png"}}" class="btn btn-success btn-sm documents-download" download="{{$student->path}}"><i class="fa fa-download"></i></a>--}}
 
-                                                        </div>
+                                                            {{--<a href="#" class="btn btn-success btn-sm documents-download" data-download_location="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :
+                                                            $templatePlugin->rootLocation()."/css/images/default_image.png"}}"><i class="fa fa-download"></i></a>--}}
+                                                        </div><br>
+                                                        <iframe class="doc" src="{{'https://docs.google.com/gview?url=http://18.191.44.167/storage/files/documents/'.$student->student_id.'/'.$student->path.'&embedded=true'}}"></iframe>
                                                     </td>
                                                 </tr>
 
