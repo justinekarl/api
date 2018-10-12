@@ -56,4 +56,6 @@ Route::post('/ojtmonitoring/approveStudent', 'AssessmentController@approveStuden
 
 Route::get('/ojtmonitoring/resume/company/{company_id}', 'AssessmentController@viewCompany');
 
+Route::get('/ojtmonitoring/student/{student_id}', 'AssessmentController@viewStudentInformation');
+
 

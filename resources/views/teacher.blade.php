@@ -13,11 +13,11 @@
     <script src="{{$templatePlugin->rootLocation()}}/js/ladda/spin.min.js"></script>
     <script src="{{$templatePlugin->rootLocation()}}/js/ladda/ladda.min.js"></script>
     <script src="{{$templatePlugin->rootLocation()}}/js/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="{{$templatePlugin->rootLocation()}}js/notify/snotify.js"></script>
+    <script src="{{$templatePlugin->rootLocation()}}/js/notify/snotify.js"></script>
 
 
-    <script src="{{$templatePlugin->rootLocation()}}js/modules/documents/main/documents.js"></script>
-    <script src="{{$templatePlugin->rootLocation()}}js/modules/documents/main/event_documents.js"></script>
+    <script src="{{$templatePlugin->rootLocation()}}/js/modules/documents/main/documents.js"></script>
+    <script src="{{$templatePlugin->rootLocation()}}/js/modules/documents/main/event_documents.js"></script>
 
 @endsection
 
@@ -54,10 +54,10 @@
                                         </thead>
 
                                         <tbody>
-                                         @foreach($students as $student)
+                                         @foreach($students as $student) 
                                             @if($teacher->college == $student->college && $student->path != null && $student->approved == 0)
-                                            <tr>
-                                                <td>
+                                            <tr> 
+                                                <td> HERE {{$student->student_name}}
                                                     <div class="row text-center">
                                                         Company Name : {{$student->company_name}} 
 

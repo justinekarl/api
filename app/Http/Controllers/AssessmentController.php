@@ -191,6 +191,14 @@ class AssessmentController extends Controller
             ]);
     }
 
+    public function viewStudentInformation($student_id){
+        $student = User::find($student_id);
+
+        return view('studentinfo',
+            [
+                'student' => $student
+            ]);
+    }
 
     /*public function viewResumesFromCompany($company_id){
         $company = User::find($company_id);
