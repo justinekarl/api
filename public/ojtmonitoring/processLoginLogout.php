@@ -37,7 +37,7 @@ if(isset($_POST['agent_id'])){
 	    $response['login_logout_action'] = "Login Successful";
 					
 	}else{
-		$updateLogout = "UPDATE student_ojt_attendance_log SET logout_date = '".$logOutDate."',login = false
+		$updateLogout = "UPDATE student_ojt_attendance_log SET logout_date = '".$logOutDate."',login = false,is_read = false
 						 WHERE student_id = '".$studentId."' AND company_id = '".$companyId."' AND CAST(scan_date as date) = current_date
 						 AND logout_date IS NULL and login_date IS NOT NULL
  						";

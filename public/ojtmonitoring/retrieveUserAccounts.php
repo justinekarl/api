@@ -1,66 +1,74 @@
 <?php
 
 require_once 'db_config.php';
-
 $response = array();
 
-// check for required fields
-error_log("retrieving user accounts");
-if (isset($_POST['agentid'])) {
-   
-    $accounttype = intval($_POST['accountType']);
-   
-    $agentId = $_POST['agentid'];
-    error_log("log in -".$agentId);
+error_log("get user accounts list");
+if (isset($_POST['college'])) {
 
- 
-   
-    error_log($accounttype);
+    $college = $_POST['college'];
+    $accounttype = $_POST['accounttype'];
 
-    $query1 = "SELECT user.*,description,moa_certified FROM user  LEFT JOIN company_profile ON user.id = company_profile.user_id where user.id = ".$_POST['agentid'];
-
-        error_log("QUERY TO!!");
-        error_log($query1);
-   
+    $sectionQuery = "
+               
+                SELECT id,COALESCE(name,'') as name,COALESCE(address,'') as address,COALESCE(phonenumber,'') as phonenumber,COALESCE(gender,'') as gender,COALESCE(email,'') as email,COALESCE(course,'') as course,COALESCE(department,'') as department, approved  FROM user WHERE 1=1 ";
 
 
-    $conn = new mysqli($host, $username, $password, $db_name,$port);
-   
+    if($accounttype == 1 || $accounttype == 2){
 
-    $checker= 0;
-    if ($result = $conn->query($query1)) {
-        while ($row = $result->fetch_assoc()) {
-            $checker = $checker+1;
-            
-                foreach($row  as $key => $value){
-                    $response[$key] = $value;
-                }
-         }
-        $result->free();
+        $sectionQuery = $sectionQuery. " AND accounttype = $accounttype ";
+        if($college != ''){
+            $sectionQuery = $sectionQuery. " AND college = '".$college."' ";
+        }
+
+        /* if($accounttype == 1){
+             $sectionQuery = $sectionQuery. " AND approved ";
+         }*/
     }
-    
 
-    if($checker > 0){
+    if($accounttype == 3){
+        $sectionQuery = $sectionQuery. " AND accounttype = $accounttype ";
+        $sectionQuery = $sectionQuery. " AND id IN (SELECT company_id FROM company_course_to_accept WHERE course_id IN (SELECT id FROM course_look_up WHERE college = '".$college."')) ";
+    }
+
+    if($accounttype == 4){
+        $sectionQuery = $sectionQuery. " AND accounttype = $accounttype ";
+        $sectionQuery = $sectionQuery. " AND company_id IN (SELECT company_id FROM company_course_to_accept WHERE course_id IN (SELECT id FROM course_look_up WHERE college = '".$college."')) ";
+
+        $sectionQuery = $sectionQuery. " ";
+
+    }
+
+
+    $sectionQuery = $sectionQuery. " order by name";
+
+
+    $items = [];
+    error_log($sectionQuery);
+
+    $itemResults = mysqli_fetch_all(mysqli_query($link,$sectionQuery));
+
+
+
+    if(sizeof($itemResults) > 0){
+        for ($ctr = 0; $ctr < sizeof($itemResults); $ctr++){
+            array_push($items, $itemResults[$ctr]);
+        }
+    }
+
+    error_log("section_names------>".json_encode($items)."<------");
+    if(sizeof($items) > 0){
         $response["success"] = 1;
+        $response["user_list"] = $items;
+
         error_log(json_encode($response));
         echo json_encode($response);
-    }else{
+    }else {
         $response["success"] = 0;
-        $response["message"] = "User does not exists";
-        error_log(json_encode($response));
+        $response["user_list"] = "None";
         echo json_encode($response);
     }
-    
 
-    // check if row inserted or not
-
-} else {
-    // required field is missing
-    $response["success"] = 0;
-    $response["message"] = "xx";
-
-    // echoing JSON response
-    error_log(json_encode($response));
-    echo json_encode($response);
 }
+
 ?>

@@ -6,9 +6,9 @@ class DB_CONNECT {
 	function connect(){
 		$host="localhost";
 		$username="root";
-		$password="1234";
+		$password="root";
 		$db_name="ojtmonitoring";
-		$link=mysqli_connect('localhost', 'root', '', 'ojtmonitoring1') or die("unable to connect");
+		$link=mysqli_connect('localhost', 'root', 'root', 'ojtmonitoring') or die("unable to connect");
 	}
 	
     

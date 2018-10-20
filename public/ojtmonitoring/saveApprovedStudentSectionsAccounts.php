@@ -21,6 +21,20 @@ if (isset($_POST['section'])) {
 
 		error_log("XXXX ".print_r($result,true));	
 
+		if($value){
+			$insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,teacher_id,saved_by_id,action)
+						   SELECT $key,$key,".$_POST['agentId'].",".$_POST['agentId'].",'Approved Student Section'	";
+		}else{
+			$insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,teacher_id,saved_by_id,action)
+						   SELECT $key,$key,".$_POST['agentId'].",".$_POST['agentId'].",'Declined Student Section'	";
+		}
+		error_log($insertToLogSQL);
+
+		$result=mysqli_query($link, $insertToLogSQL);
+
+		error_log("insert transaction log approving student section ".print_r($result,true));	
+
+
 	}
 
 	if($result == 1){

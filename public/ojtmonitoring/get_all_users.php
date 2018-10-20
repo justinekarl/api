@@ -3,11 +3,11 @@
 require_once 'db_config.php';
 $response = array();
  
-$query =" SELECT * FROM agent order by full_name ASC";
+$query =" SELECT * FROM user ";
 
-$query=" SELECT id_agent,user_name,password,student_number,full_name,admin,borrowed.not_clear FROM agent ";
-$query.=" left join (select agent_id,count(borrowed.agent_id) > 0 as not_clear from borrowed group by borrowed.agent_id) as borrowed on agent.id_agent = borrowed.agent_id ";
-$query.=" WHERE admin = 0 and deleted = 0 order by full_name ASC ";
+//$query=" SELECT id_agent,user_name,password,student_number,full_name,admin,borrowed.not_clear FROM agent ";
+//$query.=" left join (select agent_id,count(borrowed.agent_id) > 0 as not_clear from borrowed group by borrowed.agent_id) as borrowed on agent.id_agent = borrowed.agent_id ";
+//$query.=" WHERE admin = 0 and deleted = 0 order by full_name ASC ";
 
 $items = array();
 

@@ -12,7 +12,7 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
     $accounttype = intval($_POST['accounttype']);
     $full_name= $_POST['full_name'];
     $phonenumber = $_POST['phonenumber'];
-    
+
 
 
     if($accounttype == 1){
@@ -20,7 +20,7 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
         $college = $_POST['college'];
         $address = $_POST['address'];
         $email = $_POST['email'];
-	    $gender = $_POST['gender'];
+        $gender = $_POST['gender'];
         $ojthours = $_POST['ojtHours'];
         $course   = $_POST['course'];
     }
@@ -43,7 +43,7 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
     }
 
 
-    
+
     $queryTo = "SELECT count(*) cnt FROM user where username='{$user_name}'";
     $result_checker = mysqli_query($link,$queryTo);
     $checker = (int) mysqli_fetch_assoc($result_checker)["cnt"];
@@ -73,34 +73,34 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
             $insertedId = mysqli_insert_id($link);
             error_log($insertedId);
 
-             $response['returned_id'] = $insertedId;
-             $response['message'] = "Successfully Created Student Account";
-             $response['success'] = 1;
+            $response['returned_id'] = $insertedId;
+            $response['message'] = "Successfully Created Student Account";
+            $response['success'] = 1;
 
         }
 
 
         if($accounttype == 2) {
-        	$msg = "";
+            $msg = "";
 
-        	$queryTeacher = "SELECT count(*) cnt FROM user where  accounttype = 2 AND TRIM(college)='{$college}' AND admin_teacher IS TRUE ";
-		    $result_check2 = mysqli_query($link,$queryTeacher);
-		    $checker2 = (int) mysqli_fetch_assoc($result_check2)["cnt"];
+            $queryTeacher = "SELECT count(*) cnt FROM user where  accounttype = 2 AND TRIM(college)='{$college}' AND admin_teacher IS TRUE ";
+            $result_check2 = mysqli_query($link,$queryTeacher);
+            $checker2 = (int) mysqli_fetch_assoc($result_check2)["cnt"];
 
             error_log($checker2);
 
 
-		    if($checker2 > 0){
-		    	 $teacherQry = "INSERT INTO user(username,password,teachernumber,name,department,phonenumber,accounttype,college,approved) VALUES('$user_name', '$password','$teacherNumber','$full_name','$department','$phonenumber','$accounttype','$college',false)";
-		    	 $msg = "Successfully Created Teacher Account, Awaiting Approval from Admin.";
-		    }else{
+            if($checker2 > 0){
+                $teacherQry = "INSERT INTO user(username,password,teachernumber,name,department,phonenumber,accounttype,college,approved) VALUES('$user_name', '$password','$teacherNumber','$full_name','$department','$phonenumber','$accounttype','$college',false)";
+                $msg = "Successfully Created Teacher Account, Awaiting Approval from Admin.";
+            }else{
 
-	            $teacherQry = "INSERT INTO user(username,password,teachernumber,name,department,phonenumber,accounttype,college,approved,admin_teacher) VALUES('$user_name', '$password','$teacherNumber','$full_name','$department','$phonenumber','$accounttype','$college',true,true)";
-	            $msg = "Successfully Created Teacher Account.";
-	            
-        	}
+                $teacherQry = "INSERT INTO user(username,password,teachernumber,name,department,phonenumber,accounttype,college,approved,admin_teacher) VALUES('$user_name', '$password','$teacherNumber','$full_name','$department','$phonenumber','$accounttype','$college',false,true)";
+                $msg = "Successfully Created Teacher Account.";
 
-			$result=mysqli_query($link,$teacherQry);
+            }
+
+            $result=mysqli_query($link,$teacherQry);
             error_log("studentQry".print_r($teacherQry,true));
             $response['message'] = $msg;
             $response['success'] = 1;
@@ -108,11 +108,11 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
         }
 
         if($accounttype == 3){
-        
 
-            $companyQry = "INSERT INTO user(username,password,name,address,department,phonenumber,accounttype,approved) VALUES('$user_name', '$password','$full_name','$address','$companyType','$phonenumber','$accounttype',true)";
+
+            $companyQry = "INSERT INTO user(username,password,name,address,department,phonenumber,accounttype,approved) VALUES('$user_name', '$password','$full_name','$address','$companyType','$phonenumber','$accounttype',false)";
             $result=mysqli_query($link,$companyQry
-                );
+            );
             $id = mysqli_insert_id($link);
             error_log($id);
 
@@ -123,7 +123,7 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
 
             $result=mysqli_query($link,$companyProfileQry);
 
-             $coursesIds = $_POST['courseIds'];
+            $coursesIds = $_POST['courseIds'];
 
             error_log($coursesIds);
 
@@ -139,9 +139,9 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
                 error_log($insertSelectedCourseQry);
 
                 $result=mysqli_query($link,
-                            $insertSelectedCourseQry);
+                    $insertSelectedCourseQry);
 
-                error_log("insert selected courses info ".print_r($result,true));   
+                error_log("insert selected courses info ".print_r($result,true));
             }
 
             $response['message'] = "Successfully created Company Account";
@@ -155,7 +155,7 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
             $coorQry = "INSERT INTO user(username,password,name,phonenumber,accounttype,address,company_name) VALUES('$user_name', '$password','$full_name','$phonenumber',4,'$address','$companyName')";
             $result=mysqli_query($link,$coorQry);
 
-            
+
             error_log("coorQry".print_r($coorQry,true));
 
             $id = mysqli_insert_id($link);
@@ -170,16 +170,16 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
             //$conn = new mysqli($host, $username, $password, $db_name,$port);
 
             $companyId = 0;
-             if ($result = (mysqli_query($link,$companyNameQry))) {
+            if ($result = (mysqli_query($link,$companyNameQry))) {
                 while ($row = $result->fetch_assoc()) {
-                        foreach($row  as $key => $value){
-                            error_log($key);
-                            if($key == "company_id"){
-                                $companyId= $value;
-                                break;
-                            }
+                    foreach($row  as $key => $value){
+                        error_log($key);
+                        if($key == "company_id"){
+                            $companyId= $value;
+                            break;
                         }
-                 }
+                    }
+                }
                 $result->free();
             }
 
@@ -196,15 +196,15 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
 
 
     }else{
-            $response['message'] = "Username already Exist!";
-            $response['success'] = 0;
+        $response['message'] = "Username already Exist!";
+        $response['success'] = 0;
     }
 
-    
+
     error_log("response".print_r($response, true));
     echo json_encode($response);
 
 
 
-} 
+}
 ?>
