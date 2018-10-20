@@ -21,12 +21,21 @@ if (isset($_POST['agentId'])) {
 
 		error_log("insert selected ojt info ".print_r($result,true));	
 
+		$insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,teacher_id,saved_by_id,action)
+						   SELECT $key,$key,".$_POST['agentId'].",".$_POST['agentId'].",'Approved Student Account'	";
+		error_log($insertToLogSQL);
+
+		$result=mysqli_query($link, $insertToLogSQL);
+
+		error_log("insert transaction log approving student ".print_r($result,true));	
+
+
 	}
 
 	if($result == 1){
 		$response['success'] = 1;
 	}else{
-		$response['success'] = 0;	
+		$response['success'] = 0;
 	}
 }else{
 	$response['success'] = 0;	

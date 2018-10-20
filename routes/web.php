@@ -29,6 +29,7 @@ Route::post('/ojtmonitoring/getMessage', 'ChatMessagesController@getMessage');
 
 Route::get('/ojtmonitoring/getLatestStudentLog/{student_id}', 'ChatMessagesController@getLatestStudentLog');
 
+Route::get('/ojtmonitoring/getTransactionLogs/{student_id}', 'ChatMessagesController@getStudentTransactionLogs');
 
 Route::get('/ojtmonitoring/getLatestMessage/{receiver_id}', 'ChatMessagesController@getLatestMessage');
 

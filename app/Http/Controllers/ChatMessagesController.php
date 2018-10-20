@@ -135,11 +135,35 @@ class ChatMessagesController extends Controller
          $result1 = DB::update(DB::raw($updateSQL));
 
          error_log($updateSQL);
-         error_log($updateSQL);
+         
 
          return response()->json([
             "response" => true,
             "log" => $result
         ]);
+    }
+
+
+    public function getStudentTransactionLogs($student_id){
+        $sql = "SELECT action,COALESCE((select name from user where id = student_id),'') as student_name,COALESCE((select name from user where id = teacher_id),'') as teacher_name,COALESCE((select name from user where id = company_id),'') as company_name,COALESCE((select name from user where id = supervisor_id),'') as supervisor_name,COALESCE((select name from user where id = saved_by_id),'') as saved_by,COALESCE((select name from user where id = admin_id),'') as admin,DATE_FORMAT(log_date_created,'%m-%d-%Y') as transaction_date FROM transaction_log WHERE user_id = $student_id AND is_read IS FALSE ORDER BY id DESC ";
+
+        error_log($sql);
+
+        $result = DB::select( DB::raw($sql));
+
+        $updateSQL = "UPDATE transaction_log SET is_read = TRUE WHERE user_id = $student_id ";
+
+        $result1 = DB::update(DB::raw($updateSQL));
+
+         error_log($updateSQL);
+
+        return response()->json([
+            "response" => true,
+            "log" => $result
+        ]);
+
+
+
+
     }
 }

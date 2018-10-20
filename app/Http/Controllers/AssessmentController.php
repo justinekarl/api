@@ -260,10 +260,37 @@ class AssessmentController extends Controller
                 $sql .= ",".$teacher_id;
                 error_log($sql);
                 DB::insert(DB::raw($sql));
+
+
+                $insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,teacher_id,saved_by_id,action)
+
+             SELECT (SELECT user_id FROM resume_details WHERE id = ".$resume_details->id."),
+                          (SELECT user_id FROM resume_details WHERE id = ".$resume_details->id."),
+              ".$teacher_id.",
+              ".$teacher_id.",
+              'Approved OJT Application'
+
+                ";
+             error_log($insertToLogSQL);   
+             DB::insert(DB::raw($insertToLogSQL));
+
             }else{
                 $sql = "DELETE FROM company_ojt WHERE user_id = ".$resume_details->id." AND company_id = ".$company_id." ";
                 DB::delete(DB::raw($sql));
                 error_log($sql);
+
+                $insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,teacher_id,saved_by_id,action)
+
+                 SELECT (SELECT user_id FROM resume_details WHERE id = ".$resume_details->id."),
+                              (SELECT user_id FROM resume_details WHERE id = ".$resume_details->id."),
+                  ".$teacher_id.",
+                  ".$teacher_id.",
+                  'OJT Application Declined'
+
+                    ";
+                 error_log($insertToLogSQL);   
+                 DB::insert(DB::raw($insertToLogSQL));
+
             }
 
 
@@ -299,6 +326,18 @@ class AssessmentController extends Controller
             error_log($sql);
 
             DB::insert(DB::raw($sql));
+
+            $insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,company_id,saved_by_id,action)
+
+                 SELECT ".$student_id.",
+                        ".$student_id.",
+                  ".$company_id.",
+                  ".$company_id.",
+                  'OJT Application Company Approved'
+
+                    ";
+                 error_log($insertToLogSQL);   
+                 DB::insert(DB::raw($insertToLogSQL));
 
          }
          //'$studId','You were accepted as an OJT for Company : ".$companyName."

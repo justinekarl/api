@@ -16,6 +16,24 @@ if (isset($_POST['agentId'])) {
                 $sql);
 
 	 error_log("update student section ".print_r($result,true));
+
+	 $insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,teacher_id,saved_by_id,action)
+						   SELECT ".$_POST['agentId'].", 
+						   (SELECT approved_by_teacher_id FROM user WHERE id = ".$_POST['agentId']."),
+						   (SELECT approved_by_teacher_id FROM user WHERE id = ".$_POST['agentId'].") ,
+						   ".$_POST['agentId'].",
+						    'Student Section Approval - ".$_POST['sectionName']." ' ";
+
+	 error_log($insertToLogSQL);
+
+	 $result=mysqli_query($link,
+                $insertToLogSQL);
+
+	 error_log("save student section log ".print_r($result,true));
+
+
+
+
  	 $response['success'] = 1;
 }else{
 	 $response['success'] = 0;

@@ -25,6 +25,16 @@ if (isset($_POST['userAccountsMap'])) {
 
 		error_log("updated selected user info ".print_r($result,true));	
 
+		if($value){
+			$insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,admin_id,saved_by_id,action)
+							   SELECT $key,$key,".$_POST['agentId'].",".$_POST['agentId'].",'Approved User Account'	";
+			error_log($insertToLogSQL);
+
+			$result=mysqli_query($link, $insertToLogSQL);
+
+			error_log("insert transaction log approving student ".print_r($result,true));
+		}
+
 	}
 
 	if($result == 1){
