@@ -55,7 +55,7 @@ if (isset($_POST['agentId'])) {
 															student_id ,
 															comments ,
 															skills_gained ) 
-						SELECT $week,'$staffName',DATE_FORMAT('$startDate','%y/%m/%d'),DATE_FORMAT('$endDate','%y/%m/%d'),".$_POST['agentId']." , '$comments','$skillsGained'
+						SELECT '$week','$staffName',DATE_FORMAT('$startDate','%y/%m/%d'),DATE_FORMAT('$endDate','%y/%m/%d'),".$_POST['agentId']." , '$comments','$skillsGained'
 																";
 				error_log($insertQuery);												
 				$result=mysqli_query($link,$insertQuery);
@@ -107,6 +107,25 @@ if (isset($_POST['agentId'])) {
 					error_log("insert student_weekly_practicum_task ".print_r($result,true));	
 
 				}
+
+		if($result){
+			$insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,saved_by_id,action)
+					   SELECT ".$_POST['agentId'].",(SELECT accepted_by_company_id FROM company_ojt WHERE user_id = (SELECT id FROM resume_details WHERE user_id = ".$_POST['agentId'].")),".$_POST['agentId'].",'Student Weekly Report Created'";
+			error_log($insertToLogSQL);
+
+			$result=mysqli_query($link, $insertToLogSQL);
+
+			error_log("insert transaction log approving student ".print_r($result,true));
+
+
+			$insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,saved_by_id,action)
+					   SELECT ".$_POST['agentId'].",(SELECT approved_by_teacher_id FROM company_ojt WHERE user_id = (SELECT id FROM resume_details WHERE user_id = ".$_POST['agentId'].")),".$_POST['agentId'].",'Student Weekly Report Created'";
+			error_log($insertToLogSQL);
+
+			$result=mysqli_query($link, $insertToLogSQL);
+
+			error_log("insert transaction log approving student ".print_r($result,true));
+		}
 
 	}else{
 		error_log("UPDATE");

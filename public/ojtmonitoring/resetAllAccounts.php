@@ -225,6 +225,20 @@ error_log($sql1);
 $result=mysqli_query($link,
     $sql1);
 
+
+$sql = "DELETE FROM transaction_log;" ;
+error_log($sql);
+
+$result=mysqli_query($link,
+    $sql);
+
+$sql1 = "ALTER TABLE transaction_log AUTO_INCREMENT = 1 " ;
+error_log($sql1);
+
+$result=mysqli_query($link,
+    $sql1);
+
+
 error_log(json_encode($response));
 echo json_encode($response);
 
