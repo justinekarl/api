@@ -8,7 +8,8 @@ error_log("get student name by company id");
 if (isset($_POST['agentid'])) {
     $agent_id = $_POST['agentid'];
     
-    $queryOjt = " SELECT COALESCE(user.id,0) as student_id,COALESCE(user.name,'') as student_name,COALESCE(user.course,'') as course
+    $queryOjt = " SELECT COALESCE(user.id,0) as student_id,COALESCE(user.name,'') as student_name,COALESCE(user.course,'') as course,COALESCE(user.gender,'') as gender,
+    	COALESCE(user.section,'') as section
 
 				FROM company_ojt co
 				LEFT JOIN resume_details rd ON co.user_id = rd.id

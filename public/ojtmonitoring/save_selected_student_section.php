@@ -19,8 +19,8 @@ if (isset($_POST['agentId'])) {
 
 	 $insertToLogSQL = "INSERT INTO transaction_log(student_id,user_id,teacher_id,saved_by_id,action)
 						   SELECT ".$_POST['agentId'].", 
-						   (SELECT approved_by_teacher_id FROM user WHERE id = ".$_POST['agentId']."),
-						   (SELECT approved_by_teacher_id FROM user WHERE id = ".$_POST['agentId'].") ,
+						   (select created_by_teacher_id from section where section_name = '".$_POST['sectionName']."'),
+						   (select created_by_teacher_id from section where section_name = '".$_POST['sectionName']."') ,
 						   ".$_POST['agentId'].",
 						    'Student Section Approval - ".$_POST['sectionName']." ' ";
 
