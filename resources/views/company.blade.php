@@ -68,7 +68,7 @@
                         {{--<a href="#" class="btn btn-success btn-sm documents-download" data-download_location="{{(isset($student) && $student != null && "" != $student->path) ? $fileManager->getFileUrl("files/documents", $student->path,$student->student_id) :
                         $templatePlugin->rootLocation()."/css/images/default_image.png"}}"><i class="fa fa-download"></i></a>--}}
                     </div><br>
-                    <iframe class="doc" src="{{'https://docs.google.com/gview?url=http://18.191.44.167/storage/files/documents/'.$student->student_id.'/'.$student->path.'&embedded=true'}}"></iframe>
+                    <iframe class="doc" src="{{'https://docs.google.com/gview?url=http://3.16.10.125/storage/files/documents/'.$student->student_id.'/'.$student->path.'&embedded=true'}}"></iframe>
                 </td>
             </tr>
 
