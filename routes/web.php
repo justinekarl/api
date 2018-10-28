@@ -59,4 +59,6 @@ Route::get('/ojtmonitoring/resume/company/{company_id}', 'AssessmentController@v
 
 Route::get('/ojtmonitoring/student/{student_id}', 'AssessmentController@viewStudentInformation');
 
+Route::get('/ojtmonitoring/student/log/{student_id}', 'AssessmentController@viewStudentLogs');
+
 

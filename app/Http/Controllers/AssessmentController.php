@@ -200,6 +200,27 @@ class AssessmentController extends Controller
             ]);
     }
 
+    public function viewStudentLogs($student_id){
+        $sql = "SELECT COALESCE(b.name,'') as student_name,COALESCE(c.name,'') as company_name,COALESCE(a.login_date,'') as login,COALESCE(a.logout_date,'') as logout, CASE WHEN finger_print_scanner THEN 'Y' ELSE 'N' END as a
+                    FROM student_ojt_attendance_log a
+                LEFT JOIN user b ON a.student_id = b.id AND b.accounttype = 1
+                LEFT JOIN user c ON c.id = a.company_id AND c.accounttype = 3
+                    WHERE b.id IN (SELECT user_id FROM resume_details WHERE approved )
+                    AND a.student_id = ".$student_id." ";
+
+        error_log($sql);
+        $logs1 = DB::select(DB::raw($sql));
+        error_log("JUSTINE".sizeof($logs1));
+        error_log("insert company ojt info ".print_r($logs1,true));   
+
+        
+        return view('studentlogs',
+            [
+                'logs1' => $logs1
+            ]);
+
+    }
+
     /*public function viewResumesFromCompany($company_id){
         $company = User::find($company_id);
 
