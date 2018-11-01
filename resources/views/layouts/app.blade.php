@@ -19,8 +19,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        body {
+                background-image: url("{{ asset('css/images/background_light.png') }}");
+        } 
+    </style>
+ 
+
 </head>
-<body>
+<body></body>>
     @yield('content')
 </body>
 </html>

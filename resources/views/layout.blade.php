@@ -19,6 +19,11 @@
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="{{$templatePlugin->rootLocation()}}/provider/dist/css/skins/_all-skins.min.css">
 
+    <style>
+        body {
+                background-image: url("{{ asset('css/images/background_light.png') }}");
+        } 
+    </style>
 
         @yield('css')
 

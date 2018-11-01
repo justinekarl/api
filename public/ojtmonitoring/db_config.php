@@ -18,9 +18,9 @@ $port="3306"; */
 
 $host="localhost";
 $username="root";
-$password="1234";
+$password="";
 $db_name="ojtmonitoring";
 $port="5432";
 
-$link=mysqli_connect($host, $username, $password, $db_name,$port) or die("unable to connect"); 
+$link=mysqli_connect($host, $username, $password, $db_name) or die("unable to connect"); 
 ?>
