@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class FingerPrintController extends Controller
@@ -18,13 +19,15 @@ class FingerPrintController extends Controller
         $checker = DB::select(DB::raw($sqlChecker));
         $login = $checker[0]->checker;
 
+        $now  = Carbon::now('Asia/Manila');
+
         if($login){
-            $login = " UPDATE student_ojt_attendance_log SET logout_date = now(), login = false,is_read = false";
+            $login = " UPDATE student_ojt_attendance_log SET logout_date = '{$now}', login = false,is_read = false";
             $login .= " WHERE student_id = {$id} AND company_id = {$company_id} ";
             $login .= " AND logout_date IS NULL and login_date IS NOT NULL ";
         }else{
             $login = "INSERT INTO student_ojt_attendance_log(student_id,company_id,login_date,login,finger_print_scanner)";
-            $login .= "VALUES ({$id},{$company_id},now(),true,true)";
+            $login .= "VALUES ({$id},{$company_id},'{$now}',true,true)";
         }
 	error_log("finder print : ".$id);
         $result = DB::select(DB::raw($login));
@@ -36,3 +39,4 @@ class FingerPrintController extends Controller
     }
 
 }
+
