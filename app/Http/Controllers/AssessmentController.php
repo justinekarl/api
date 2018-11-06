@@ -169,7 +169,7 @@ class AssessmentController extends Controller
                     LEFT JOIN user e ON e.id = c.user_id
                     LEFT JOIN company_ojt co ON co.user_id = c.user_id
                     LEFT JOIN resumes ON c.user_id = resumes.student_id
-                    WHERE 1=1";
+                    ";
        //$sql .= " AND TRIM(e.college) = (SELECT college FROM user WHERE id = ".$teacher_id." AND accounttype = 2) " ;
 
         error_log($sql);
@@ -211,9 +211,9 @@ class AssessmentController extends Controller
         error_log($sql);
         $logs1 = DB::select(DB::raw($sql));
         error_log("JUSTINE".sizeof($logs1));
-        error_log("insert company ojt info ".print_r($logs1,true));   
+        error_log("insert company ojt info ".print_r($logs1,true));
 
-        
+
         return view('studentlogs',
             [
                 'logs1' => $logs1
@@ -230,7 +230,7 @@ class AssessmentController extends Controller
                        accepted,
                        COALESCE(b.course,'')
                     FROM company_ojt a
-                    LEFT JOIN resume_details rd ON rd.id = a.user_id 
+                    LEFT JOIN resume_details rd ON rd.id = a.user_id
                     LEFT JOIN user b ON rd.user_id = b.id
 
                     WHERE a.company_id= "$company_id"
@@ -292,7 +292,7 @@ class AssessmentController extends Controller
               'Approved OJT Application'
 
                 ";
-             error_log($insertToLogSQL);   
+             error_log($insertToLogSQL);
              DB::insert(DB::raw($insertToLogSQL));
 
             }else{
@@ -309,7 +309,7 @@ class AssessmentController extends Controller
                   'OJT Application Declined'
 
                     ";
-                 error_log($insertToLogSQL);   
+                 error_log($insertToLogSQL);
                  DB::insert(DB::raw($insertToLogSQL));
 
             }
@@ -317,7 +317,7 @@ class AssessmentController extends Controller
 
             error_log($sql);
 
-            
+
 
             $response = ['response' => true, 'message' => 'Successful'];
         }
@@ -357,7 +357,7 @@ class AssessmentController extends Controller
                   'OJT Application Company Approved'
 
                     ";
-                 error_log($insertToLogSQL);   
+                 error_log($insertToLogSQL);
                  DB::insert(DB::raw($insertToLogSQL));
 
          }
