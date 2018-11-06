@@ -81,8 +81,9 @@ class AssessmentController extends Controller
 
         $e=$request->input('5_1') + $request->input('5_2') + $request->input('5_3');
 
-        $ave = ($a/5) + ($b/5) + ($c/6) + ($d/3) + ($e/3);
-
+        //$ave = ($a/5) + ($b/5) + ($c/6) + ($d/3) + ($e/3);
+        $ave = $a + $b + $c + $d+ $e;
+        $ave = $ave / 22;
         $aps = (($ave * 50) / 5) + 50;
 
         return $aps;
