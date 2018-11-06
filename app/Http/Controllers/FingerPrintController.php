@@ -19,7 +19,7 @@ class FingerPrintController extends Controller
         $checker = DB::select(DB::raw($sqlChecker));
         $login = $checker[0]->checker;
 
-        $now  = Carbon::now('Asia/Manila');
+        $now  = Carbon::now('Asia/Manila')->format('Y/m/d h:i:s');
 
         if($login){
             $login = " UPDATE student_ojt_attendance_log SET logout_date = '{$now}', login = false,is_read = false";
